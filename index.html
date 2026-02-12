@@ -6,7 +6,7 @@
   <title>Andrew Wu — My Personal Website</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ===== Reset & Base ===== */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,11 +34,39 @@
       overflow-x: hidden;
     }
 
+    body.lang-zh {
+      font-family: 'Noto Sans SC', 'Nunito', sans-serif;
+    }
+
     h1, h2, h3 { font-family: 'Fredoka', sans-serif; }
+    body.lang-zh h1,
+    body.lang-zh h2,
+    body.lang-zh h3 { font-family: 'Noto Sans SC', 'Fredoka', sans-serif; }
 
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
     img { max-width: 100%; display: block; }
+
+    /* ===== Language Toggle ===== */
+    body.lang-en .zh { display: none !important; }
+    body.lang-zh .en { display: none !important; }
+
+    .lang-btn {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: #fff;
+      border: none;
+      padding: 0.35rem 0.85rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+    .lang-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(74,144,217,0.4);
+    }
 
     /* ===== Animated Background Shapes ===== */
     .bg-shapes {
@@ -83,6 +111,9 @@
       background: linear-gradient(135deg, var(--blue), var(--purple));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
+    }
+    nav .nav-right {
+      display: flex; align-items: center; gap: 1.2rem;
     }
     nav .nav-links { display: flex; gap: 1.5rem; }
     nav .nav-links a {
@@ -375,7 +406,7 @@
     }
   </style>
 </head>
-<body>
+<body class="lang-en">
 
 <!-- Floating background shapes -->
 <div class="bg-shapes">
@@ -389,14 +420,17 @@
     <button class="menu-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#interests">Interests</a>
-      <a href="#favorites">Favorites</a>
-      <a href="#mybook">My Book</a>
-      <a href="#goals">Goals</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#visitors">Visitors</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#about"><span class="en">About</span><span class="zh">关于我</span></a>
+        <a href="#interests"><span class="en">Interests</span><span class="zh">兴趣爱好</span></a>
+        <a href="#favorites"><span class="en">Favorites</span><span class="zh">我的最爱</span></a>
+        <a href="#mybook"><span class="en">My Book</span><span class="zh">我的书</span></a>
+        <a href="#goals"><span class="en">Goals</span><span class="zh">我的目标</span></a>
+        <a href="#gallery"><span class="en">Gallery</span><span class="zh">精彩瞬间</span></a>
+        <a href="#visitors"><span class="en">Visitors</span><span class="zh">访客地图</span></a>
+      </div>
+      <button class="lang-btn" id="langToggle" onclick="toggleLang()">中文</button>
     </div>
   </div>
 </nav>
@@ -404,37 +438,65 @@
 <!-- Hero -->
 <section class="hero" id="home">
   <div class="hero-avatar"><img src="profile.jpg" alt="Andrew Wu" /></div>
-  <h1><span class="wave">&#128075;</span> Hi, I'm Andrew Wu!</h1>
-  <p>I'm a student at <strong>Harrington Elementary School</strong> and I love learning new things every day!</p>
-  <a href="#about" class="hero-btn">Get to Know Me</a>
+  <h1>
+    <span class="wave">&#128075;</span>
+    <span class="en"> Hi, I'm Andrew Wu!</span>
+    <span class="zh"> 嗨，我是Andrew Wu！</span>
+  </h1>
+  <p>
+    <span class="en">I'm a student at <strong>Harrington Elementary School</strong> and I love learning new things every day!</span>
+    <span class="zh">我是<strong>Harrington小学</strong>的学生，我每天都喜欢学习新东西！</span>
+  </p>
+  <a href="#about" class="hero-btn">
+    <span class="en">Get to Know Me</span>
+    <span class="zh">了解我</span>
+  </a>
 </section>
 
 <!-- About -->
 <section id="about">
   <div class="reveal">
-    <h2 class="section-title">About Me</h2>
+    <h2 class="section-title">
+      <span class="en">About Me</span>
+      <span class="zh">关于我</span>
+    </h2>
     <div class="underline" style="background: linear-gradient(90deg, var(--blue), var(--purple));"></div>
     <div class="about-grid">
       <div class="about-image">&#128218;</div>
       <div class="about-text">
-        <p>
+        <p class="en">
           Hey there! My name is <strong>Andrew Wu</strong> and I'm a student at
           <span class="highlight hl-blue">Harrington Elementary School</span>.
         </p>
-        <p>
+        <p class="zh">
+          大家好！我叫<strong>Andrew Wu</strong>，我是
+          <span class="highlight hl-blue">Harrington小学</span>的学生。
+        </p>
+        <p class="en">
           I'm curious about the world and love exploring new subjects at school.
           Whether it's solving tricky math problems, reading cool stories, or doing
           science experiments, I always try my best!
         </p>
-        <p>
+        <p class="zh">
+          我对世界充满好奇，喜欢在学校里探索新的学科。无论是解决数学难题、阅读有趣的故事，还是做科学实验，我都会尽力做到最好！
+        </p>
+        <p class="en">
           I'm also a <span class="highlight hl-green">Green Belt in Karate</span>!
           When I'm not training, you can find me skiing, ice skating, swimming, biking,
           or playing soccer and basketball. I also love playing piano and gaming with
           my favorite games like Minecraft and Cat Quest.
         </p>
-        <p>
+        <p class="zh">
+          我还是<span class="highlight hl-green">空手道绿带</span>选手！
+          不练空手道的时候，你可以看到我在滑雪、溜冰、游泳、骑自行车，或者踢足球和打篮球。我也喜欢弹钢琴，还喜欢玩我最爱的游戏——Minecraft和Cat Quest。
+        </p>
+        <p class="en">
           I even wrote my own book about cats!
           I believe that <span class="highlight hl-orange">every day is a chance to learn something amazing</span>!
+        </p>
+        <p class="zh">
+          我甚至写了一本关于猫的书！
+          我相信<span class="highlight hl-orange">每一天都是学习新知识的好机会</span>！
         </p>
       </div>
     </div>
@@ -444,39 +506,63 @@
 <!-- Interests -->
 <section id="interests">
   <div class="reveal">
-    <h2 class="section-title">Things I Love</h2>
-    <p class="section-subtitle">Here are some of my favorite hobbies and interests!</p>
+    <h2 class="section-title">
+      <span class="en">Things I Love</span>
+      <span class="zh">我的兴趣爱好</span>
+    </h2>
+    <p class="section-subtitle">
+      <span class="en">Here are some of my favorite hobbies and interests!</span>
+      <span class="zh">这些是我最喜欢的爱好和兴趣！</span>
+    </p>
     <div class="underline" style="background: linear-gradient(90deg, var(--green), var(--blue));"></div>
     <div class="cards">
       <div class="card">
         <div class="card-icon">&#129355;</div>
-        <h3>Karate</h3>
-        <p>I'm a Green Belt in Karate! I love practicing my moves and working towards my next belt.</p>
+        <h3><span class="en">Karate</span><span class="zh">空手道</span></h3>
+        <p>
+          <span class="en">I'm a Green Belt in Karate! I love practicing my moves and working towards my next belt.</span>
+          <span class="zh">我是空手道绿带！我喜欢练习招式，努力向下一条带迈进。</span>
+        </p>
       </div>
       <div class="card">
         <div class="card-icon">&#9917;</div>
-        <h3>Soccer &amp; Basketball</h3>
-        <p>I love playing soccer and basketball with my friends. Teamwork makes it even more fun!</p>
+        <h3><span class="en">Soccer &amp; Basketball</span><span class="zh">足球和篮球</span></h3>
+        <p>
+          <span class="en">I love playing soccer and basketball with my friends. Teamwork makes it even more fun!</span>
+          <span class="zh">我喜欢和朋友们一起踢足球和打篮球。团队合作让运动更有趣！</span>
+        </p>
       </div>
       <div class="card">
         <div class="card-icon">&#9975;</div>
-        <h3>Skiing &amp; Ice Skating</h3>
-        <p>Winter sports are awesome! I enjoy skiing down the slopes and gliding on the ice rink.</p>
+        <h3><span class="en">Skiing &amp; Ice Skating</span><span class="zh">滑雪和溜冰</span></h3>
+        <p>
+          <span class="en">Winter sports are awesome! I enjoy skiing down the slopes and gliding on the ice rink.</span>
+          <span class="zh">冬季运动太棒了！我喜欢在雪坡上滑雪，在冰面上滑冰。</span>
+        </p>
       </div>
       <div class="card">
         <div class="card-icon">&#127946;</div>
-        <h3>Swimming &amp; Biking</h3>
-        <p>Whether it's splashing in the pool or riding my bike, I love staying active outdoors!</p>
+        <h3><span class="en">Swimming &amp; Biking</span><span class="zh">游泳和骑车</span></h3>
+        <p>
+          <span class="en">Whether it's splashing in the pool or riding my bike, I love staying active outdoors!</span>
+          <span class="zh">无论是在泳池里畅游还是骑自行车，我都喜欢在户外运动！</span>
+        </p>
       </div>
       <div class="card">
         <div class="card-icon">&#127929;</div>
-        <h3>Piano</h3>
-        <p>I'm learning to play piano and I love practicing new songs. Music makes me happy!</p>
+        <h3><span class="en">Piano</span><span class="zh">钢琴</span></h3>
+        <p>
+          <span class="en">I'm learning to play piano and I love practicing new songs. Music makes me happy!</span>
+          <span class="zh">我正在学弹钢琴，喜欢练习新曲子。音乐让我快乐！</span>
+        </p>
       </div>
       <div class="card">
         <div class="card-icon">&#127918;</div>
-        <h3>Gaming</h3>
-        <p>Minecraft and Cat Quest are my favorite games! I love building worlds and going on adventures.</p>
+        <h3><span class="en">Gaming</span><span class="zh">游戏</span></h3>
+        <p>
+          <span class="en">Minecraft and Cat Quest are my favorite games! I love building worlds and going on adventures.</span>
+          <span class="zh">Minecraft和Cat Quest是我最爱的游戏！我喜欢建造世界和冒险。</span>
+        </p>
       </div>
     </div>
   </div>
@@ -485,41 +571,71 @@
 <!-- Favorites -->
 <section id="favorites">
   <div class="reveal">
-    <h2 class="section-title">My Favorites</h2>
-    <p class="section-subtitle">Some of the things that make me smile the most!</p>
+    <h2 class="section-title">
+      <span class="en">My Favorites</span>
+      <span class="zh">我的最爱</span>
+    </h2>
+    <p class="section-subtitle">
+      <span class="en">Some of the things that make me smile the most!</span>
+      <span class="zh">这些是最让我开心的事物！</span>
+    </p>
     <div class="underline" style="background: linear-gradient(90deg, var(--orange), var(--red));"></div>
     <div class="fav-list">
       <div class="fav-item">
         <div class="fav-icon">&#127829;</div>
-        <div><strong>Favorite Food</strong><span>Pizza</span></div>
+        <div>
+          <strong><span class="en">Favorite Food</span><span class="zh">最爱的食物</span></strong>
+          <span class="en">Pizza</span><span class="zh">披萨</span>
+        </div>
       </div>
       <div class="fav-item">
         <div class="fav-icon">&#127912;</div>
-        <div><strong>Favorite Color</strong><span>Blue</span></div>
+        <div>
+          <strong><span class="en">Favorite Color</span><span class="zh">最爱的颜色</span></strong>
+          <span class="en">Blue</span><span class="zh">蓝色</span>
+        </div>
       </div>
       <div class="fav-item">
         <div class="fav-icon">&#127909;</div>
-        <div><strong>Favorite Movie</strong><span>Spider-Man</span></div>
+        <div>
+          <strong><span class="en">Favorite Movie</span><span class="zh">最爱的电影</span></strong>
+          <span class="en">Spider-Man</span><span class="zh">蜘蛛侠</span>
+        </div>
       </div>
       <div class="fav-item">
         <div class="fav-icon">&#128218;</div>
-        <div><strong>Favorite Subject</strong><span>Math &amp; Science</span></div>
+        <div>
+          <strong><span class="en">Favorite Subject</span><span class="zh">最爱的科目</span></strong>
+          <span class="en">Math &amp; Science</span><span class="zh">数学和科学</span>
+        </div>
       </div>
       <div class="fav-item">
         <div class="fav-icon">&#127790;</div>
-        <div><strong>Favorite Season</strong><span>Summer</span></div>
+        <div>
+          <strong><span class="en">Favorite Season</span><span class="zh">最爱的季节</span></strong>
+          <span class="en">Summer</span><span class="zh">夏天</span>
+        </div>
       </div>
       <div class="fav-item">
         <div class="fav-icon">&#128049;</div>
-        <div><strong>Favorite Animal</strong><span>Cat</span></div>
+        <div>
+          <strong><span class="en">Favorite Animal</span><span class="zh">最爱的动物</span></strong>
+          <span class="en">Cat</span><span class="zh">猫</span>
+        </div>
       </div>
       <div class="fav-item">
         <div class="fav-icon">&#127918;</div>
-        <div><strong>Favorite Games</strong><span>Minecraft &amp; Cat Quest</span></div>
+        <div>
+          <strong><span class="en">Favorite Games</span><span class="zh">最爱的游戏</span></strong>
+          <span>Minecraft &amp; Cat Quest</span>
+        </div>
       </div>
       <div class="fav-item">
         <div class="fav-icon">&#129355;</div>
-        <div><strong>Karate Rank</strong><span>Green Belt</span></div>
+        <div>
+          <strong><span class="en">Karate Rank</span><span class="zh">空手道段位</span></strong>
+          <span class="en">Green Belt</span><span class="zh">绿带</span>
+        </div>
       </div>
     </div>
   </div>
@@ -528,27 +644,53 @@
 <!-- My Book -->
 <section id="mybook">
   <div class="reveal">
-    <h2 class="section-title">My Book</h2>
-    <p class="section-subtitle">I wrote a book! Check it out!</p>
+    <h2 class="section-title">
+      <span class="en">My Book</span>
+      <span class="zh">我的书</span>
+    </h2>
+    <p class="section-subtitle">
+      <span class="en">I wrote a book! Check it out!</span>
+      <span class="zh">我写了一本书！快来看看！</span>
+    </p>
     <div class="underline" style="background: linear-gradient(90deg, var(--orange), var(--pink));"></div>
     <div class="book-showcase">
       <div class="book-cover">
         <div class="book-emoji">&#128049;</div>
-        <div class="book-title">How to Take Care of Your Cat</div>
-        <div class="book-author">by Andrew Wu</div>
+        <div class="book-title">
+          <span class="en">How to Take Care of Your Cat</span>
+          <span class="zh">如何照顾你的猫</span>
+        </div>
+        <div class="book-author">
+          <span class="en">by Andrew Wu</span>
+          <span class="zh">Andrew Wu 著</span>
+        </div>
       </div>
       <div class="book-info">
-        <h3>&#128214; How to Take Care of Your Cat</h3>
-        <p>
+        <h3>
+          &#128214;
+          <span class="en">How to Take Care of Your Cat</span>
+          <span class="zh">如何照顾你的猫</span>
+        </h3>
+        <p class="en">
           As a huge cat lover, I wrote this book to share everything I've learned about
           taking care of cats. From feeding and grooming to playing and keeping them happy,
           this book has all the tips you need to be an awesome cat owner!
         </p>
-        <p>
+        <p class="zh">
+          作为一个超级猫咪爱好者，我写了这本书来分享我学到的关于照顾猫咪的所有知识。从喂食和梳毛到玩耍和让它们开心，这本书有你成为一个好猫主人所需的所有建议！
+        </p>
+        <p class="en">
           Whether you already have a cat or you're thinking about getting one,
           this guide will help you give your furry friend the best life possible.
         </p>
-        <span class="book-badge">&#11088; Written by Andrew</span>
+        <p class="zh">
+          无论你已经有一只猫还是正在考虑养一只，这本指南都能帮你给毛茸茸的朋友最好的生活。
+        </p>
+        <span class="book-badge">
+          &#11088;
+          <span class="en">Written by Andrew</span>
+          <span class="zh">Andrew的作品</span>
+        </span>
       </div>
     </div>
   </div>
@@ -557,25 +699,43 @@
 <!-- Goals -->
 <section id="goals">
   <div class="reveal">
-    <h2 class="section-title">My Goals</h2>
-    <p class="section-subtitle">Things I'm working towards and dreaming about!</p>
+    <h2 class="section-title">
+      <span class="en">My Goals</span>
+      <span class="zh">我的目标</span>
+    </h2>
+    <p class="section-subtitle">
+      <span class="en">Things I'm working towards and dreaming about!</span>
+      <span class="zh">我正在努力和梦想的事情！</span>
+    </p>
     <div class="underline" style="background: linear-gradient(90deg, var(--purple), var(--pink));"></div>
     <div class="goals-grid">
       <div class="goal">
-        <h3>&#127891; Get Great Grades</h3>
-        <p>I want to do my best in all my subjects and make my family proud.</p>
+        <h3>&#127891; <span class="en">Get Great Grades</span><span class="zh">取得好成绩</span></h3>
+        <p>
+          <span class="en">I want to do my best in all my subjects and make my family proud.</span>
+          <span class="zh">我想在所有科目上都做到最好，让家人为我骄傲。</span>
+        </p>
       </div>
       <div class="goal">
-        <h3>&#128187; Learn to Code</h3>
-        <p>I'm excited to learn more about programming and build cool projects.</p>
+        <h3>&#128187; <span class="en">Learn to Code</span><span class="zh">学习编程</span></h3>
+        <p>
+          <span class="en">I'm excited to learn more about programming and build cool projects.</span>
+          <span class="zh">我很期待学习更多编程知识，创造酷炫的项目。</span>
+        </p>
       </div>
       <div class="goal">
-        <h3>&#127758; Travel the World</h3>
-        <p>I dream of visiting amazing places and learning about different cultures.</p>
+        <h3>&#127758; <span class="en">Travel the World</span><span class="zh">环游世界</span></h3>
+        <p>
+          <span class="en">I dream of visiting amazing places and learning about different cultures.</span>
+          <span class="zh">我梦想着去世界各地的美丽地方，了解不同的文化。</span>
+        </p>
       </div>
       <div class="goal">
-        <h3>&#129351; Be a Good Friend</h3>
-        <p>I always want to be kind, helpful, and a great teammate to everyone.</p>
+        <h3>&#129351; <span class="en">Be a Good Friend</span><span class="zh">做一个好朋友</span></h3>
+        <p>
+          <span class="en">I always want to be kind, helpful, and a great teammate to everyone.</span>
+          <span class="zh">我希望永远善良、乐于助人，做一个好队友。</span>
+        </p>
       </div>
     </div>
   </div>
@@ -584,8 +744,14 @@
 <!-- Gallery -->
 <section id="gallery">
   <div class="reveal">
-    <h2 class="section-title">Fun Gallery</h2>
-    <p class="section-subtitle">Some of my favorite things in picture form!</p>
+    <h2 class="section-title">
+      <span class="en">Fun Gallery</span>
+      <span class="zh">精彩瞬间</span>
+    </h2>
+    <p class="section-subtitle">
+      <span class="en">Some of my favorite things in picture form!</span>
+      <span class="zh">用图片展示我最喜欢的事物！</span>
+    </p>
     <div class="underline" style="background: linear-gradient(90deg, var(--green), var(--orange));"></div>
     <div class="gallery-grid">
       <div class="gallery-item">&#129355;</div>
@@ -600,11 +766,20 @@
 
 <!-- Visitors -->
 <section id="visitors">
-  <h2 class="section-title">Visitors</h2>
-  <p class="section-subtitle">See where my visitors come from around the world!</p>
+  <h2 class="section-title">
+    <span class="en">Visitors</span>
+    <span class="zh">访客地图</span>
+  </h2>
+  <p class="section-subtitle">
+    <span class="en">See where my visitors come from around the world!</span>
+    <span class="zh">看看我的访客来自世界哪些地方！</span>
+  </p>
   <div class="underline" style="background: linear-gradient(90deg, var(--blue), var(--green));"></div>
   <div class="visitors-container">
-    <p>Check out this map to see all the cool places people are visiting my website from!</p>
+    <p>
+      <span class="en">Check out this map to see all the cool places people are visiting my website from!</span>
+      <span class="zh">看看这张地图，了解来自世界各地的人们都在访问我的网站！</span>
+    </p>
     <div class="clustrmaps-widget">
       <a href="https://clustrmaps.com/site/1c98g" title="Visit tracker"><img src="https://clustrmaps.com/map_v2.png?cl=ffffff&w=500&t=n&d=YXWb0PmiYdwwoFsbWnZ42mw6lw0N3htl5sN8sJ9XSVo&co=2d78ad&ct=ffffff" /></a>
     </div>
@@ -614,36 +789,70 @@
 <!-- Footer -->
 <footer>
   <div class="footer-emoji">&#11088;</div>
-  <p>Made with love by <strong>Andrew Wu</strong></p>
-  <p>&copy; 2026 Andrew Wu &mdash; Harrington Elementary School</p>
+  <p>
+    <span class="en">Made with love by <strong>Andrew Wu</strong></span>
+    <span class="zh">用心制作 - <strong>Andrew Wu</strong></span>
+  </p>
+  <p>
+    <span class="en">&copy; 2026 Andrew Wu &mdash; Harrington Elementary School</span>
+    <span class="zh">&copy; 2026 Andrew Wu &mdash; Harrington小学</span>
+  </p>
 </footer>
 
 <!-- Scripts -->
 <script>
+  // Language toggle
+  function toggleLang() {
+    var body = document.body;
+    var btn = document.getElementById('langToggle');
+    if (body.classList.contains('lang-en')) {
+      body.classList.remove('lang-en');
+      body.classList.add('lang-zh');
+      document.documentElement.lang = 'zh';
+      btn.textContent = 'English';
+      localStorage.setItem('lang', 'zh');
+    } else {
+      body.classList.remove('lang-zh');
+      body.classList.add('lang-en');
+      document.documentElement.lang = 'en';
+      btn.textContent = '中文';
+      localStorage.setItem('lang', 'en');
+    }
+  }
+
+  // Load saved language preference
+  (function() {
+    var saved = localStorage.getItem('lang');
+    if (saved === 'zh') {
+      document.body.classList.remove('lang-en');
+      document.body.classList.add('lang-zh');
+      document.documentElement.lang = 'zh';
+      document.getElementById('langToggle').textContent = 'English';
+    }
+  })();
+
+  // Scroll-reveal animation
   try {
-    // Scroll-reveal animation
-    const reveals = document.querySelectorAll('.reveal');
+    var reveals = document.querySelectorAll('.reveal');
     if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
           }
         });
       }, { threshold: 0.05 });
-      reveals.forEach(el => observer.observe(el));
+      reveals.forEach(function(el) { observer.observe(el); });
     } else {
-      // Fallback: show everything if IntersectionObserver is not supported
-      reveals.forEach(el => el.classList.add('visible'));
+      reveals.forEach(function(el) { el.classList.add('visible'); });
     }
   } catch (e) {
-    // Fallback: show all content if anything goes wrong
-    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
   }
 
   // Close mobile nav on link click
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
+  document.querySelectorAll('.nav-links a').forEach(function(link) {
+    link.addEventListener('click', function() {
       document.querySelector('.nav-links').classList.remove('open');
     });
   });
