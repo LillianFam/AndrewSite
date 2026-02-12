@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Andrew Wu — My Personal Website</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --blue:    #4a90d9;
+      --orange:  #f5a623;
+      --green:   #27ae60;
+      --purple:  #9b59b6;
+      --red:     #e74c3c;
+      --pink:    #fd79a8;
+      --dark:    #2d3436;
+      --light:   #fefefe;
+      --gray:    #636e72;
+      --bg:      #f0f4ff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--dark);
+      background: var(--bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 { font-family: 'Fredoka', sans-serif; }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ===== Animated Background Shapes ===== */
+    .bg-shapes {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+    .bg-shapes span {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.10;
+      animation: float 18s ease-in-out infinite;
+    }
+    .bg-shapes span:nth-child(1) { width: 300px; height: 300px; background: var(--blue);   top: -80px; left: -60px;  animation-delay: 0s; }
+    .bg-shapes span:nth-child(2) { width: 200px; height: 200px; background: var(--orange); top: 40%;  right: -50px; animation-delay: 3s; }
+    .bg-shapes span:nth-child(3) { width: 250px; height: 250px; background: var(--green);  bottom: 10%; left: 20%;  animation-delay: 6s; }
+    .bg-shapes span:nth-child(4) { width: 180px; height: 180px; background: var(--purple); top: 20%;  left: 55%;   animation-delay: 9s; }
+    .bg-shapes span:nth-child(5) { width: 220px; height: 220px; background: var(--pink);   bottom: -40px; right: 25%; animation-delay: 12s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      33%      { transform: translateY(-30px) rotate(5deg); }
+      66%      { transform: translateY(20px) rotate(-3deg); }
+    }
+
+    /* ===== Navigation ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+    nav .nav-inner {
+      max-width: 1100px; margin: auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.8rem 1.5rem;
+    }
+    nav .logo {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.5rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    nav .nav-links { display: flex; gap: 1.5rem; }
+    nav .nav-links a {
+      font-weight: 600; font-size: 0.95rem;
+      color: var(--gray); transition: color 0.3s;
+    }
+    nav .nav-links a:hover { color: var(--blue); }
+
+    /* Mobile menu toggle */
+    .menu-toggle { display: none; background: none; border: none; cursor: pointer; }
+    .menu-toggle span {
+      display: block; width: 26px; height: 3px;
+      background: var(--dark); margin: 5px 0; border-radius: 3px;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 640px) {
+      .menu-toggle { display: block; }
+      nav .nav-links {
+        position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; align-items: center;
+        background: rgba(255,255,255,0.97);
+        padding: 1rem 0; gap: 1rem;
+        transform: scaleY(0); transform-origin: top;
+        transition: transform 0.3s;
+      }
+      nav .nav-links.open { transform: scaleY(1); }
+    }
+
+    /* ===== Sections ===== */
+    section {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: auto;
+      padding: 5rem 1.5rem 3rem;
+    }
+    section:first-of-type { padding-top: 7rem; }
+
+    .section-title {
+      font-size: 2rem; margin-bottom: 0.3rem;
+    }
+    .section-subtitle {
+      color: var(--gray); margin-bottom: 2rem; font-size: 1.05rem;
+    }
+    .underline {
+      width: 60px; height: 4px; border-radius: 4px;
+      margin-bottom: 2rem;
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; text-align: center;
+      min-height: 90vh; padding-top: 5rem;
+    }
+    .hero-avatar {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; color: #fff;
+      box-shadow: 0 8px 30px rgba(74,144,217,0.35);
+      margin-bottom: 1.5rem;
+      animation: pop 0.6s ease-out;
+    }
+    @keyframes pop {
+      0%   { transform: scale(0.3); opacity: 0; }
+      80%  { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .hero h1 {
+      font-size: 3rem; line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 .wave { display: inline-block; animation: wave 2.5s infinite; transform-origin: 70% 70%; }
+    @keyframes wave {
+      0%   { transform: rotate(0deg); }
+      10%  { transform: rotate(14deg); }
+      20%  { transform: rotate(-8deg); }
+      30%  { transform: rotate(14deg); }
+      40%  { transform: rotate(-4deg); }
+      50%  { transform: rotate(10deg); }
+      60%  { transform: rotate(0deg); }
+      100% { transform: rotate(0deg); }
+    }
+    .hero p {
+      font-size: 1.2rem; color: var(--gray);
+      max-width: 480px; margin-bottom: 2rem;
+    }
+    .hero-btn {
+      display: inline-block; padding: 0.75rem 2rem;
+      border-radius: 50px; font-weight: 700;
+      color: #fff; background: linear-gradient(135deg, var(--blue), var(--purple));
+      box-shadow: 0 4px 15px rgba(74,144,217,0.4);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .hero-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(74,144,217,0.5); }
+
+    /* ===== About ===== */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2.5rem; align-items: center;
+    }
+    .about-image {
+      background: linear-gradient(135deg, var(--orange), var(--red));
+      border-radius: 20px; height: 320px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem;
+      box-shadow: 0 8px 30px rgba(245,166,35,0.25);
+    }
+    .about-text p { margin-bottom: 1rem; color: var(--gray); }
+    .about-text .highlight {
+      display: inline-block; padding: 0.2rem 0.7rem; border-radius: 8px;
+      font-weight: 700;
+    }
+    .hl-blue   { background: #e8f0fe; color: var(--blue); }
+    .hl-green  { background: #e6f9ee; color: var(--green); }
+    .hl-orange { background: #fff4e0; color: #e67e22; }
+
+    @media (max-width: 700px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .about-image { height: 220px; }
+    }
+
+    /* ===== Fun Facts / Interests ===== */
+    .cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: #fff; border-radius: 18px;
+      padding: 2rem 1.5rem; text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+    .card-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+    .card h3 { font-size: 1.15rem; margin-bottom: 0.4rem; }
+    .card p  { font-size: 0.92rem; color: var(--gray); }
+
+    /* ===== Favorites ===== */
+    .fav-list {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+    .fav-item {
+      display: flex; align-items: center; gap: 1rem;
+      background: #fff; border-radius: 14px;
+      padding: 1.2rem 1.5rem;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+    }
+    .fav-item:hover { transform: translateX(6px); }
+    .fav-icon {
+      font-size: 1.8rem; min-width: 40px; text-align: center;
+    }
+    .fav-item strong { display: block; font-size: 0.85rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.05em; }
+    .fav-item span  { font-weight: 600; }
+
+    /* ===== Book ===== */
+    .book-showcase {
+      display: flex; align-items: center; gap: 2.5rem;
+      background: #fff; border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+    }
+    .book-cover {
+      min-width: 180px; width: 180px; height: 250px;
+      border-radius: 12px;
+      background: linear-gradient(160deg, #ffeaa7, #fab1a0);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 1.2rem;
+      box-shadow: 6px 6px 20px rgba(0,0,0,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+    .book-cover::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 6px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 12px 0 0 12px;
+    }
+    .book-cover .book-emoji { font-size: 3rem; margin-bottom: 0.6rem; }
+    .book-cover .book-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--dark); line-height: 1.3;
+    }
+    .book-cover .book-author {
+      font-size: 0.75rem; color: var(--gray);
+      margin-top: 0.5rem; font-weight: 600;
+    }
+    .book-info h3 { font-size: 1.3rem; margin-bottom: 0.6rem; }
+    .book-info p  { color: var(--gray); margin-bottom: 0.8rem; font-size: 0.95rem; }
+    .book-badge {
+      display: inline-block; padding: 0.3rem 1rem;
+      border-radius: 50px; font-size: 0.85rem; font-weight: 700;
+      background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+      color: #e17055;
+    }
+    @media (max-width: 640px) {
+      .book-showcase { flex-direction: column; text-align: center; }
+      .book-cover { min-width: 150px; width: 150px; height: 210px; }
+    }
+
+    /* ===== Goals ===== */
+    .goals-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .goal {
+      background: #fff; border-radius: 16px;
+      padding: 1.8rem 1.5rem;
+      border-left: 5px solid var(--blue);
+      box-shadow: 0 3px 14px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+    }
+    .goal:hover { transform: translateY(-4px); }
+    .goal:nth-child(2) { border-left-color: var(--green); }
+    .goal:nth-child(3) { border-left-color: var(--orange); }
+    .goal:nth-child(4) { border-left-color: var(--purple); }
+    .goal h3 { margin-bottom: 0.4rem; font-size: 1.1rem; }
+    .goal p  { font-size: 0.92rem; color: var(--gray); }
+
+    /* ===== Gallery ===== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+    }
+    .gallery-item {
+      border-radius: 16px; overflow: hidden;
+      height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+      transition: transform 0.3s;
+    }
+    .gallery-item:hover { transform: scale(1.04); }
+    .gallery-item:nth-child(1) { background: linear-gradient(135deg, #a8e6cf, #dcedc1); }
+    .gallery-item:nth-child(2) { background: linear-gradient(135deg, #ffd3b6, #ffaaa5); }
+    .gallery-item:nth-child(3) { background: linear-gradient(135deg, #c3bef7, #a8d8ea); }
+    .gallery-item:nth-child(4) { background: linear-gradient(135deg, #ffeaa7, #fab1a0); }
+    .gallery-item:nth-child(5) { background: linear-gradient(135deg, #81ecec, #74b9ff); }
+    .gallery-item:nth-child(6) { background: linear-gradient(135deg, #fd79a8, #e17055); }
+
+    /* ===== Footer ===== */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; padding: 3rem 1.5rem 2rem;
+      color: var(--gray); font-size: 0.9rem;
+    }
+    footer .footer-emoji { font-size: 1.6rem; margin-bottom: 0.5rem; }
+
+    /* ===== Scroll Animations ===== */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1; transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Floating background shapes -->
+<div class="bg-shapes">
+  <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">Andrew W.</a>
+    <button class="menu-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#interests">Interests</a>
+      <a href="#favorites">Favorites</a>
+      <a href="#mybook">My Book</a>
+      <a href="#goals">Goals</a>
+      <a href="#gallery">Gallery</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-avatar">A</div>
+  <h1><span class="wave">&#128075;</span> Hi, I'm Andrew Wu!</h1>
+  <p>I'm a student at <strong>Harrington Elementary School</strong> and I love learning new things every day!</p>
+  <a href="#about" class="hero-btn">Get to Know Me</a>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="reveal">
+    <h2 class="section-title">About Me</h2>
+    <div class="underline" style="background: linear-gradient(90deg, var(--blue), var(--purple));"></div>
+    <div class="about-grid">
+      <div class="about-image">&#128218;</div>
+      <div class="about-text">
+        <p>
+          Hey there! My name is <strong>Andrew Wu</strong> and I'm a student at
+          <span class="highlight hl-blue">Harrington Elementary School</span>.
+        </p>
+        <p>
+          I'm curious about the world and love exploring new subjects at school.
+          Whether it's solving tricky math problems, reading cool stories, or doing
+          science experiments, I always try my best!
+        </p>
+        <p>
+          When I'm not in school, you can find me playing outside with my friends,
+          building awesome things with LEGO, or drawing in my sketchbook.
+          I believe that <span class="highlight hl-green">every day is a chance to learn something amazing</span>!
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Interests -->
+<section id="interests">
+  <div class="reveal">
+    <h2 class="section-title">Things I Love</h2>
+    <p class="section-subtitle">Here are some of my favorite hobbies and interests!</p>
+    <div class="underline" style="background: linear-gradient(90deg, var(--green), var(--blue));"></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">&#127952;</div>
+        <h3>Sports</h3>
+        <p>I enjoy playing soccer, basketball, and swimming. Staying active is super fun!</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128214;</div>
+        <h3>Reading</h3>
+        <p>Adventure books and comics are my favorites. I love getting lost in a great story!</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127912;</div>
+        <h3>Art &amp; Drawing</h3>
+        <p>I like sketching characters and painting with watercolors. Creating things makes me happy!</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128187;</div>
+        <h3>Technology</h3>
+        <p>Computers and coding are really cool. I'm learning how to build websites like this one!</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127911;</div>
+        <h3>Music</h3>
+        <p>I love listening to music and learning to play instruments. Rhythm is awesome!</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128056;</div>
+        <h3>Animals</h3>
+        <p>I think animals are amazing! I love learning about different creatures from around the world.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Favorites -->
+<section id="favorites">
+  <div class="reveal">
+    <h2 class="section-title">My Favorites</h2>
+    <p class="section-subtitle">Some of the things that make me smile the most!</p>
+    <div class="underline" style="background: linear-gradient(90deg, var(--orange), var(--red));"></div>
+    <div class="fav-list">
+      <div class="fav-item">
+        <div class="fav-icon">&#127829;</div>
+        <div><strong>Favorite Food</strong><span>Pizza</span></div>
+      </div>
+      <div class="fav-item">
+        <div class="fav-icon">&#127912;</div>
+        <div><strong>Favorite Color</strong><span>Blue</span></div>
+      </div>
+      <div class="fav-item">
+        <div class="fav-icon">&#127909;</div>
+        <div><strong>Favorite Movie</strong><span>Spider-Man</span></div>
+      </div>
+      <div class="fav-item">
+        <div class="fav-icon">&#128218;</div>
+        <div><strong>Favorite Subject</strong><span>Math &amp; Science</span></div>
+      </div>
+      <div class="fav-item">
+        <div class="fav-icon">&#127790;</div>
+        <div><strong>Favorite Season</strong><span>Summer</span></div>
+      </div>
+      <div class="fav-item">
+        <div class="fav-icon">&#128049;</div>
+        <div><strong>Favorite Animal</strong><span>Cat</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- My Book -->
+<section id="mybook">
+  <div class="reveal">
+    <h2 class="section-title">My Book</h2>
+    <p class="section-subtitle">I wrote a book! Check it out!</p>
+    <div class="underline" style="background: linear-gradient(90deg, var(--orange), var(--pink));"></div>
+    <div class="book-showcase">
+      <div class="book-cover">
+        <div class="book-emoji">&#128049;</div>
+        <div class="book-title">How to Take Care of Your Cat</div>
+        <div class="book-author">by Andrew Wu</div>
+      </div>
+      <div class="book-info">
+        <h3>&#128214; How to Take Care of Your Cat</h3>
+        <p>
+          As a huge cat lover, I wrote this book to share everything I've learned about
+          taking care of cats. From feeding and grooming to playing and keeping them happy,
+          this book has all the tips you need to be an awesome cat owner!
+        </p>
+        <p>
+          Whether you already have a cat or you're thinking about getting one,
+          this guide will help you give your furry friend the best life possible.
+        </p>
+        <span class="book-badge">&#11088; Written by Andrew</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Goals -->
+<section id="goals">
+  <div class="reveal">
+    <h2 class="section-title">My Goals</h2>
+    <p class="section-subtitle">Things I'm working towards and dreaming about!</p>
+    <div class="underline" style="background: linear-gradient(90deg, var(--purple), var(--pink));"></div>
+    <div class="goals-grid">
+      <div class="goal">
+        <h3>&#127891; Get Great Grades</h3>
+        <p>I want to do my best in all my subjects and make my family proud.</p>
+      </div>
+      <div class="goal">
+        <h3>&#128187; Learn to Code</h3>
+        <p>I'm excited to learn more about programming and build cool projects.</p>
+      </div>
+      <div class="goal">
+        <h3>&#127758; Travel the World</h3>
+        <p>I dream of visiting amazing places and learning about different cultures.</p>
+      </div>
+      <div class="goal">
+        <h3>&#129351; Be a Good Friend</h3>
+        <p>I always want to be kind, helpful, and a great teammate to everyone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery">
+  <div class="reveal">
+    <h2 class="section-title">Fun Gallery</h2>
+    <p class="section-subtitle">Some of my favorite things in picture form!</p>
+    <div class="underline" style="background: linear-gradient(90deg, var(--green), var(--orange));"></div>
+    <div class="gallery-grid">
+      <div class="gallery-item">&#9917;</div>
+      <div class="gallery-item">&#128218;</div>
+      <div class="gallery-item">&#127912;</div>
+      <div class="gallery-item">&#127774;</div>
+      <div class="gallery-item">&#128187;</div>
+      <div class="gallery-item">&#127911;</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-emoji">&#11088;</div>
+  <p>Made with love by <strong>Andrew Wu</strong></p>
+  <p>&copy; 2026 Andrew Wu &mdash; Harrington Elementary School</p>
+</footer>
+
+<!-- Scripts -->
+<script>
+  // Scroll-reveal animation
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Close mobile nav on link click
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
