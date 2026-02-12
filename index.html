@@ -335,6 +335,28 @@
     .gallery-item:nth-child(5) { background: linear-gradient(135deg, #81ecec, #74b9ff); }
     .gallery-item:nth-child(6) { background: linear-gradient(135deg, #fd79a8, #e17055); }
 
+    /* ===== Visitors ===== */
+    .visitors-container {
+      display: inline-flex; flex-direction: column; align-items: center;
+      background: #fff; border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+      text-align: center;
+    }
+    .visitors-container p {
+      color: var(--gray); margin-bottom: 0.8rem; font-size: 0.92rem;
+    }
+    #visitors {
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .clustrmaps-widget {
+      border-radius: 12px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .clustrmaps-widget img {
+      border-radius: 8px;
+    }
+
     /* ===== Footer ===== */
     footer {
       position: relative; z-index: 1;
@@ -374,6 +396,7 @@
       <a href="#mybook">My Book</a>
       <a href="#goals">Goals</a>
       <a href="#gallery">Gallery</a>
+      <a href="#visitors">Visitors</a>
     </div>
   </div>
 </nav>
@@ -575,6 +598,19 @@
   </div>
 </section>
 
+<!-- Visitors -->
+<section id="visitors">
+  <h2 class="section-title">Visitors</h2>
+  <p class="section-subtitle">See where my visitors come from around the world!</p>
+  <div class="underline" style="background: linear-gradient(90deg, var(--blue), var(--green));"></div>
+  <div class="visitors-container">
+    <p>Check out this map to see all the cool places people are visiting my website from!</p>
+    <div class="clustrmaps-widget">
+      <a href="https://clustrmaps.com/site/1c98g" title="Visit tracker"><img src="https://clustrmaps.com/map_v2.png?cl=ffffff&w=500&t=n&d=YXWb0PmiYdwwoFsbWnZ42mw6lw0N3htl5sN8sJ9XSVo&co=2d78ad&ct=ffffff" /></a>
+    </div>
+  </div>
+</section>
+
 <!-- Footer -->
 <footer>
   <div class="footer-emoji">&#11088;</div>
@@ -584,16 +620,26 @@
 
 <!-- Scripts -->
 <script>
-  // Scroll-reveal animation
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.15 });
-  reveals.forEach(el => observer.observe(el));
+  try {
+    // Scroll-reveal animation
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.05 });
+      reveals.forEach(el => observer.observe(el));
+    } else {
+      // Fallback: show everything if IntersectionObserver is not supported
+      reveals.forEach(el => el.classList.add('visible'));
+    }
+  } catch (e) {
+    // Fallback: show all content if anything goes wrong
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }
 
   // Close mobile nav on link click
   document.querySelectorAll('.nav-links a').forEach(link => {
