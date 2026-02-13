@@ -22,7 +22,19 @@
       --light:   #fefefe;
       --gray:    #636e72;
       --bg:      #f0f4ff;
+      --glass:   rgba(255, 255, 255, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.4);
     }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--blue), var(--purple));
+      border-radius: 10px;
+      border: 2px solid var(--bg);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: linear-gradient(var(--purple), var(--blue)); }
 
     html { scroll-behavior: smooth; }
 
@@ -111,6 +123,7 @@
 
     /* ===== Animated Background Shapes ===== */
     .bg-shapes {
+      display: none; /* Hidden in favor of dynamic particles */
       position: fixed; inset: 0;
       pointer-events: none; z-index: 0;
       overflow: hidden;
@@ -289,15 +302,37 @@
       gap: 1.5rem;
     }
     .card {
-      background: #fff; border-radius: 18px;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
       padding: 2rem 1.5rem; text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.05);
       transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
     }
-    .card:hover { transform: translateY(-6px); box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
     .card-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
     .card h3 { font-size: 1.15rem; margin-bottom: 0.4rem; }
     .card p  { font-size: 0.92rem; color: var(--gray); }
+
+    /* Achievement Badge */
+    .achievement-badge {
+      position: absolute;
+      top: 10px;
+      right: -30px;
+      background: linear-gradient(135deg, #f1c40f, #f39c12);
+      color: #fff;
+      padding: 5px 35px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      transform: rotate(45deg);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1;
+    }
 
     /* ===== Favorites ===== */
     .fav-list {
@@ -306,9 +341,13 @@
     }
     .fav-item {
       display: flex; align-items: center; gap: 1rem;
-      background: #fff; border-radius: 14px;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
       padding: 1.2rem 1.5rem;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
       transition: transform 0.2s;
     }
     .fav-item:hover { transform: translateX(6px); }
@@ -321,9 +360,15 @@
     /* ===== Book ===== */
     .book-showcase {
       display: flex; align-items: center; gap: 2.5rem;
-      background: #fff; border-radius: 20px;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
       padding: 2.5rem;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
     }
     .book-cover {
       min-width: 180px; width: 180px; height: 250px;
@@ -368,9 +413,13 @@
 
     /* ===== YouTube ===== */
     .youtube-section {
-      background: #fff; border-radius: 20px;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
       padding: 2.5rem; text-align: center;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.05);
     }
     .yt-channel-link {
       display: inline-flex; align-items: center; gap: 0.6rem;
@@ -433,9 +482,13 @@
 
     /* ===== Mini Piano ===== */
     .piano-container {
-      background: #fff; border-radius: 20px;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
       padding: 2rem; text-align: center;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.05);
     }
     .piano {
       display: inline-flex;
@@ -534,19 +587,42 @@
 
     /* ===== Guestbook ===== */
     .guestbook-container {
-      background: #fff; border-radius: 20px;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
       padding: 2rem;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.05);
     }
     .giscus { margin-top: 1rem; }
 
     /* ===== Visitors ===== */
     .visitors-container {
       display: inline-flex; flex-direction: column; align-items: center;
-      background: #fff; border-radius: 16px;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
       padding: 1.2rem 1.5rem;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.05);
       text-align: center;
+    }
+
+    /* Particle Canvas */
+    #particle-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Typing Cursor */
+    .typed-cursor {
+      color: var(--blue);
+      font-weight: 400;
     }
     .visitors-container p {
       color: var(--gray); margin-bottom: 0.8rem; font-size: 0.92rem;
@@ -591,7 +667,10 @@
 </head>
 <body class="lang-en">
 
-<!-- Floating background shapes -->
+<!-- Particle Background -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- Floating background shapes (kept as fallback) -->
 <div class="bg-shapes">
   <span></span><span></span><span></span><span></span><span></span>
 </div>
@@ -633,13 +712,9 @@
   <div class="hero-avatar"><img src="profile.jpg" alt="Andrew Wu" /></div>
   <h1>
     <span class="wave">&#128075;</span>
-    <span class="en"> Hi, I'm Andrew Wu!</span>
-    <span class="zh"> 嗨，我是Andrew Wu！</span>
+    <span id="typed-text"></span>
   </h1>
-  <p>
-    <span class="en">I'm a student at <strong>Harrington Elementary School</strong> and I love learning new things every day!</span>
-    <span class="zh">我是<strong>Harrington小学</strong>的学生，我每天都喜欢学习新东西！</span>
-  </p>
+  <p id="typed-subtext"></p>
   <a href="#about" class="hero-btn">
     <span class="en">Get to Know Me</span>
     <span class="zh">了解我</span>
@@ -709,7 +784,8 @@
     </p>
     <div class="underline" style="background: linear-gradient(90deg, var(--green), var(--blue));"></div>
     <div class="cards">
-      <div class="card">
+      <div class="card" data-tilt>
+        <div class="achievement-badge">Rank Up</div>
         <div class="card-icon">&#129355;</div>
         <h3><span class="en">Karate</span><span class="zh">空手道</span></h3>
         <p>
@@ -717,7 +793,7 @@
           <span class="zh">我是空手道绿带！我喜欢练习招式，努力向下一条带迈进。</span>
         </p>
       </div>
-      <div class="card">
+      <div class="card" data-tilt>
         <div class="card-icon">&#9917;</div>
         <h3><span class="en">Soccer &amp; Basketball</span><span class="zh">足球和篮球</span></h3>
         <p>
@@ -725,7 +801,7 @@
           <span class="zh">我喜欢和朋友们一起踢足球和打篮球。团队合作让运动更有趣！</span>
         </p>
       </div>
-      <div class="card">
+      <div class="card" data-tilt>
         <div class="card-icon">&#9975;</div>
         <h3><span class="en">Skiing &amp; Ice Skating</span><span class="zh">滑雪和溜冰</span></h3>
         <p>
@@ -733,7 +809,7 @@
           <span class="zh">冬季运动太棒了！我喜欢在雪坡上滑雪，在冰面上滑冰。</span>
         </p>
       </div>
-      <div class="card">
+      <div class="card" data-tilt>
         <div class="card-icon">&#127946;</div>
         <h3><span class="en">Swimming &amp; Biking</span><span class="zh">游泳和骑车</span></h3>
         <p>
@@ -741,7 +817,7 @@
           <span class="zh">无论是在泳池里畅游还是骑自行车，我都喜欢在户外运动！</span>
         </p>
       </div>
-      <div class="card">
+      <div class="card" data-tilt>
         <div class="card-icon">&#127929;</div>
         <h3><span class="en">Piano</span><span class="zh">钢琴</span></h3>
         <p>
@@ -749,7 +825,7 @@
           <span class="zh">我正在学弹钢琴，喜欢练习新曲子。音乐让我快乐！</span>
         </p>
       </div>
-      <div class="card">
+      <div class="card" data-tilt>
         <div class="card-icon">&#127918;</div>
         <h3><span class="en">Gaming</span><span class="zh">游戏</span></h3>
         <p>
@@ -846,7 +922,8 @@
       <span class="zh">我写了一本书！快来看看！</span>
     </p>
     <div class="underline" style="background: linear-gradient(90deg, var(--orange), var(--pink));"></div>
-    <div class="book-showcase">
+    <div class="book-showcase" data-tilt>
+      <div class="achievement-badge">Author</div>
       <div class="book-cover">
         <div class="book-emoji">&#128049;</div>
         <div class="book-title">
@@ -1123,8 +1200,12 @@
 </footer>
 
 <!-- Scripts -->
+<script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 <script>
   // ===== Language toggle =====
+  var currentLang = localStorage.getItem('lang') || 'en';
+  
   function toggleLang() {
     var body = document.body;
     var btn = document.getElementById('langToggle');
@@ -1133,15 +1214,18 @@
       body.classList.add('lang-zh');
       document.documentElement.lang = 'zh';
       btn.textContent = 'English';
+      currentLang = 'zh';
       localStorage.setItem('lang', 'zh');
     } else {
       body.classList.remove('lang-zh');
       body.classList.add('lang-en');
       document.documentElement.lang = 'en';
       btn.textContent = '中文';
+      currentLang = 'en';
       localStorage.setItem('lang', 'en');
     }
     showNextFact();
+    initTyped(); // Re-init typing animation for new language
   }
 
   (function() {
@@ -1151,8 +1235,95 @@
       document.body.classList.add('lang-zh');
       document.documentElement.lang = 'zh';
       document.getElementById('langToggle').textContent = 'English';
+      currentLang = 'zh';
     }
   })();
+
+  // ===== Typing Animation =====
+  var typedMain = null;
+  var typedSub = null;
+
+  function initTyped() {
+    if (typedMain) typedMain.destroy();
+    if (typedSub) typedSub.destroy();
+
+    var mainStrings = currentLang === 'en' 
+      ? [" Hi, I'm Andrew Wu!", " I'm a Piano Player!", " I'm a Karate Green Belt!", " I'm an Author!"]
+      : [" 嗨，我是Andrew Wu！", " 我会弹钢琴！", " 我是空手道绿带！", " 我是一名作者！"];
+    
+    var subStrings = currentLang === 'en'
+      ? ["I'm a student at <strong>Harrington Elementary School</strong> and I love learning new things every day!"]
+      : ["我是<strong>Harrington小学</strong>的学生，我每天都喜欢学习新东西！"];
+
+    typedMain = new Typed('#typed-text', {
+      strings: mainStrings,
+      typeSpeed: 60,
+      backSpeed: 40,
+      backDelay: 2000,
+      loop: true
+    });
+
+    typedSub = new Typed('#typed-subtext', {
+      strings: subStrings,
+      typeSpeed: 30,
+      showCursor: false
+    });
+  }
+  initTyped();
+
+  // ===== 3D Tilt Effect =====
+  VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+    max: 15,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.2,
+  });
+
+  // ===== Particle Background =====
+  var canvas = document.getElementById('particle-canvas');
+  var ctx = canvas.getContext('2d');
+  var particles = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function createParticle() {
+    return {
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 3 + 1,
+      speedX: Math.random() * 1 - 0.5,
+      speedY: Math.random() * 1 - 0.5,
+      color: ['#4a90d9', '#9b59b6', '#27ae60', '#f5a623'][Math.floor(Math.random() * 4)],
+      opacity: Math.random() * 0.5 + 0.2
+    };
+  }
+
+  for (var i = 0; i < 60; i++) {
+    particles.push(createParticle());
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(function(p) {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+
+      ctx.globalAlpha = p.opacity;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
 
   // ===== Fun Facts Ticker =====
   var funFacts = {
