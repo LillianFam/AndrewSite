@@ -32,6 +32,7 @@
       background: var(--bg);
       line-height: 1.6;
       overflow-x: hidden;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 32 32'%3E%3Cellipse cx='16' cy='20' rx='8' ry='7' fill='%23f8a5c2'/%3E%3Cellipse cx='8' cy='11' rx='4' ry='4.5' fill='%23f8a5c2'/%3E%3Cellipse cx='24' cy='11' rx='4' ry='4.5' fill='%23f8a5c2'/%3E%3Cellipse cx='16' cy='8' rx='3.5' ry='4' fill='%23f8a5c2'/%3E%3C/svg%3E") 14 14, auto;
     }
 
     body.lang-zh {
@@ -66,6 +67,46 @@
     .lang-btn:hover {
       transform: translateY(-1px);
       box-shadow: 0 3px 10px rgba(74,144,217,0.4);
+    }
+
+    /* ===== Paw Print Trails ===== */
+    .paw-print {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 18px;
+      opacity: 0.7;
+      animation: pawFade 1.2s ease-out forwards;
+    }
+    @keyframes pawFade {
+      0%   { opacity: 0.7; transform: scale(1) rotate(var(--paw-rot, 0deg)); }
+      100% { opacity: 0; transform: scale(0.4) rotate(var(--paw-rot, 0deg)); }
+    }
+
+    /* ===== Fun Facts Ticker ===== */
+    .fun-facts-ticker {
+      position: relative; z-index: 1;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: #fff;
+      padding: 0.7rem 1.5rem;
+      overflow: hidden;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .ticker-inner {
+      display: flex; align-items: center; justify-content: center;
+      max-width: 1100px; margin: auto;
+      gap: 0.6rem;
+      min-height: 1.5em;
+    }
+    .ticker-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .ticker-text {
+      text-align: center;
+      animation: tickerSlideIn 0.5s ease-out;
+    }
+    @keyframes tickerSlideIn {
+      0%   { opacity: 0; transform: translateY(12px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     /* ===== Animated Background Shapes ===== */
@@ -325,6 +366,131 @@
       .book-cover { min-width: 150px; width: 150px; height: 210px; }
     }
 
+    /* ===== YouTube ===== */
+    .youtube-section {
+      background: #fff; border-radius: 20px;
+      padding: 2.5rem; text-align: center;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+    }
+    .yt-channel-link {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.7rem 1.8rem;
+      border-radius: 50px; font-weight: 700; font-size: 1rem;
+      color: #fff; background: #ff0000;
+      box-shadow: 0 4px 15px rgba(255,0,0,0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      margin-bottom: 1.5rem;
+    }
+    .yt-channel-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(255,0,0,0.4);
+    }
+    .yt-channel-link svg {
+      width: 24px; height: 24px; fill: #fff;
+    }
+    .yt-videos {
+      display: flex; flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem; margin-top: 1.5rem;
+    }
+    .yt-video-card {
+      display: block;
+      width: 220px;
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-decoration: none; color: var(--dark);
+      background: #fff;
+    }
+    .yt-video-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+    .yt-thumb {
+      position: relative;
+      width: 100%; aspect-ratio: 9/16;
+      overflow: hidden; background: #000;
+    }
+    .yt-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .yt-play-btn {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.25);
+      transition: background 0.3s;
+    }
+    .yt-video-card:hover .yt-play-btn { background: rgba(0,0,0,0.4); }
+    .yt-play-btn svg {
+      width: 50px; height: 50px;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+    }
+    .yt-video-label {
+      padding: 0.7rem; text-align: center;
+      font-weight: 600; font-size: 0.85rem;
+    }
+
+    /* ===== Mini Piano ===== */
+    .piano-container {
+      background: #fff; border-radius: 20px;
+      padding: 2rem; text-align: center;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+    }
+    .piano {
+      display: inline-flex;
+      position: relative;
+      border-radius: 0 0 12px 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      margin-top: 1rem;
+    }
+    .piano-key {
+      width: 52px; height: 180px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-top: none;
+      cursor: pointer;
+      transition: background 0.1s;
+      display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 10px;
+      font-size: 0.7rem; font-weight: 700; color: #bbb;
+      user-select: none;
+      -webkit-user-select: none;
+      position: relative;
+      z-index: 1;
+    }
+    .piano-key:first-child { border-radius: 0 0 0 10px; }
+    .piano-key:last-child  { border-radius: 0 0 10px 0; }
+    .piano-key:hover { background: #f0f4ff; }
+    .piano-key:active, .piano-key.active {
+      background: linear-gradient(180deg, #e8f0fe, #d0e0ff);
+      transform: scaleY(0.98);
+      transform-origin: top;
+    }
+    .piano-key.black {
+      width: 34px; height: 115px;
+      background: linear-gradient(180deg, #2d3436, #444);
+      color: transparent;
+      border: none;
+      margin-left: -17px; margin-right: -17px;
+      z-index: 2;
+      border-radius: 0 0 5px 5px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    }
+    .piano-key.black:hover { background: linear-gradient(180deg, #444, #555); }
+    .piano-key.black:active, .piano-key.black.active {
+      background: linear-gradient(180deg, #555, #666);
+      height: 112px;
+    }
+    .piano-hint {
+      color: var(--gray); font-size: 0.85rem; margin-top: 1rem;
+    }
+    @media (max-width: 640px) {
+      .piano-key { width: 38px; height: 140px; font-size: 0.6rem; }
+      .piano-key.black { width: 26px; height: 90px; margin-left: -13px; margin-right: -13px; }
+    }
+
     /* ===== Goals ===== */
     .goals-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -366,6 +532,14 @@
     .gallery-item:nth-child(5) { background: linear-gradient(135deg, #81ecec, #74b9ff); }
     .gallery-item:nth-child(6) { background: linear-gradient(135deg, #fd79a8, #e17055); }
 
+    /* ===== Guestbook ===== */
+    .guestbook-container {
+      background: #fff; border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+    }
+    .giscus { margin-top: 1rem; }
+
     /* ===== Visitors ===== */
     .visitors-container {
       display: inline-flex; flex-direction: column; align-items: center;
@@ -386,6 +560,15 @@
     }
     .clustrmaps-widget img {
       border-radius: 8px;
+    }
+    .visitor-counter {
+      margin-top: 1rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      font-weight: 600; font-size: 0.95rem; color: var(--gray);
+    }
+    .visitor-counter img {
+      display: inline-block; vertical-align: middle;
+      border-radius: 6px;
     }
 
     /* ===== Footer ===== */
@@ -426,14 +609,24 @@
         <a href="#interests"><span class="en">Interests</span><span class="zh">兴趣爱好</span></a>
         <a href="#favorites"><span class="en">Favorites</span><span class="zh">我的最爱</span></a>
         <a href="#mybook"><span class="en">My Book</span><span class="zh">我的书</span></a>
+        <a href="#youtube"><span class="en">Videos</span><span class="zh">视频</span></a>
+        <a href="#piano"><span class="en">Piano</span><span class="zh">钢琴</span></a>
         <a href="#goals"><span class="en">Goals</span><span class="zh">我的目标</span></a>
-        <a href="#gallery"><span class="en">Gallery</span><span class="zh">精彩瞬间</span></a>
+        <a href="#guestbook"><span class="en">Guestbook</span><span class="zh">留言板</span></a>
         <a href="#visitors"><span class="en">Visitors</span><span class="zh">访客地图</span></a>
       </div>
       <button class="lang-btn" id="langToggle" onclick="toggleLang()">中文</button>
     </div>
   </div>
 </nav>
+
+<!-- Fun Facts Ticker -->
+<div class="fun-facts-ticker" id="funFactsTicker">
+  <div class="ticker-inner">
+    <span class="ticker-icon">&#11088;</span>
+    <span class="ticker-text" id="tickerText"></span>
+  </div>
+</div>
 
 <!-- Hero -->
 <section class="hero" id="home">
@@ -696,6 +889,94 @@
   </div>
 </section>
 
+<!-- YouTube -->
+<section id="youtube">
+  <div class="reveal">
+    <h2 class="section-title">
+      <span class="en">&#127909; My Piano Videos</span>
+      <span class="zh">&#127909; 我的钢琴视频</span>
+    </h2>
+    <p class="section-subtitle">
+      <span class="en">Watch me play piano on my YouTube channel!</span>
+      <span class="zh">在我的YouTube频道观看我弹钢琴！</span>
+    </p>
+    <div class="underline" style="background: linear-gradient(90deg, var(--red), var(--orange));"></div>
+    <div class="youtube-section">
+      <a href="https://www.youtube.com/@LearnPianowithAndrew" target="_blank" class="yt-channel-link">
+        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.546 12 3.546 12 3.546s-7.505 0-9.377.504A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.504 9.376.504 9.376.504s7.505 0 9.377-.504a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <span class="en">Subscribe to Learn Piano with Andrew</span>
+        <span class="zh">订阅「Learn Piano with Andrew」</span>
+      </a>
+      <div class="yt-videos">
+        <a href="https://www.youtube.com/shorts/EvTQ23efwbE" target="_blank" class="yt-video-card">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/EvTQ23efwbE/0.jpg" alt="Piano Video 1" />
+            <div class="yt-play-btn">
+              <svg viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.64 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="red"/><path d="M45 24L27 14v20" fill="white"/></svg>
+            </div>
+          </div>
+          <div class="yt-video-label">
+            <span class="en">&#127929; Watch on YouTube</span>
+            <span class="zh">&#127929; 在YouTube观看</span>
+          </div>
+        </a>
+        <a href="https://www.youtube.com/shorts/DxOUtPkxDHE" target="_blank" class="yt-video-card">
+          <div class="yt-thumb">
+            <img src="https://img.youtube.com/vi/DxOUtPkxDHE/0.jpg" alt="Piano Video 2" />
+            <div class="yt-play-btn">
+              <svg viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.64 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="red"/><path d="M45 24L27 14v20" fill="white"/></svg>
+            </div>
+          </div>
+          <div class="yt-video-label">
+            <span class="en">&#127929; Watch on YouTube</span>
+            <span class="zh">&#127929; 在YouTube观看</span>
+          </div>
+        </a>
+      </div>
+      <p style="color: var(--gray); font-size: 0.85rem; margin-top: 1rem;">
+        <span class="en">More videos coming soon! Subscribe to stay updated.</span>
+        <span class="zh">更多视频即将上线！订阅频道获取更新。</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Mini Piano -->
+<section id="piano">
+  <div class="reveal">
+    <h2 class="section-title">
+      <span class="en">&#127929; Play My Piano!</span>
+      <span class="zh">&#127929; 弹钢琴！</span>
+    </h2>
+    <p class="section-subtitle">
+      <span class="en">Click the keys or use your keyboard to play!</span>
+      <span class="zh">点击琴键或用键盘来演奏！</span>
+    </p>
+    <div class="underline" style="background: linear-gradient(90deg, var(--purple), var(--blue));"></div>
+    <div class="piano-container">
+      <div class="piano" id="piano-keys">
+        <div class="piano-key" data-note="C4" data-key="a">A</div>
+        <div class="piano-key black" data-note="C#4" data-key="w"></div>
+        <div class="piano-key" data-note="D4" data-key="s">S</div>
+        <div class="piano-key black" data-note="D#4" data-key="e"></div>
+        <div class="piano-key" data-note="E4" data-key="d">D</div>
+        <div class="piano-key" data-note="F4" data-key="f">F</div>
+        <div class="piano-key black" data-note="F#4" data-key="t"></div>
+        <div class="piano-key" data-note="G4" data-key="g">G</div>
+        <div class="piano-key black" data-note="G#4" data-key="y"></div>
+        <div class="piano-key" data-note="A4" data-key="h">H</div>
+        <div class="piano-key black" data-note="A#4" data-key="u"></div>
+        <div class="piano-key" data-note="B4" data-key="j">J</div>
+        <div class="piano-key" data-note="C5" data-key="k">K</div>
+      </div>
+      <p class="piano-hint">
+        <span class="en">Keyboard: A S D F G H J K (white) &middot; W E T Y U (black)</span>
+        <span class="zh">键盘：A S D F G H J K（白键）&middot; W E T Y U（黑键）</span>
+      </p>
+    </div>
+  </div>
+</section>
+
 <!-- Goals -->
 <section id="goals">
   <div class="reveal">
@@ -764,6 +1045,42 @@
   </div>
 </section>
 
+<!-- Guestbook -->
+<section id="guestbook">
+  <div class="reveal">
+    <h2 class="section-title">
+      <span class="en">&#128221; Guestbook</span>
+      <span class="zh">&#128221; 留言板</span>
+    </h2>
+    <p class="section-subtitle">
+      <span class="en">Leave me a message! I'd love to hear from you!</span>
+      <span class="zh">给我留言吧！我很想听到你的声音！</span>
+    </p>
+    <div class="underline" style="background: linear-gradient(90deg, var(--pink), var(--purple));"></div>
+    <div class="guestbook-container">
+      <p style="color: var(--gray); font-size: 0.92rem; margin-bottom: 1rem;">
+        <span class="en">Sign in with your GitHub account to leave a message below!</span>
+        <span class="zh">用你的GitHub账号登录，在下方留言！</span>
+      </p>
+      <script src="https://giscus.app/client.js"
+        data-repo="LillianFam/AndrewSite"
+        data-repo-id="R_kgDOROVntg"
+        data-category="General"
+        data-category-id="DIC_kwDOROVnts4C2VS5"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+      </script>
+    </div>
+  </div>
+</section>
+
 <!-- Visitors -->
 <section id="visitors">
   <h2 class="section-title">
@@ -783,6 +1100,12 @@
     <div class="clustrmaps-widget">
       <a href="https://clustrmaps.com/site/1c98g" title="Visit tracker"><img src="https://clustrmaps.com/map_v2.png?cl=ffffff&w=500&t=n&d=YXWb0PmiYdwwoFsbWnZ42mw6lw0N3htl5sN8sJ9XSVo&co=2d78ad&ct=ffffff" /></a>
     </div>
+    <div class="visitor-counter">
+      <span class="en">&#127881; You're visitor #</span>
+      <span class="zh">&#127881; 你是第</span>
+      <img src="https://profile-counter.glitch.me/LillianFam-AndrewSite/count.svg" alt="Visitor Count" height="24" />
+      <span class="zh">位访客</span>
+    </div>
   </div>
 </section>
 
@@ -801,7 +1124,7 @@
 
 <!-- Scripts -->
 <script>
-  // Language toggle
+  // ===== Language toggle =====
   function toggleLang() {
     var body = document.body;
     var btn = document.getElementById('langToggle');
@@ -818,9 +1141,9 @@
       btn.textContent = '中文';
       localStorage.setItem('lang', 'en');
     }
+    showNextFact();
   }
 
-  // Load saved language preference
   (function() {
     var saved = localStorage.getItem('lang');
     if (saved === 'zh') {
@@ -831,7 +1154,164 @@
     }
   })();
 
-  // Scroll-reveal animation
+  // ===== Fun Facts Ticker =====
+  var funFacts = {
+    en: [
+      "Andrew is a Green Belt in Karate! &#129355;",
+      "Andrew's favorite game is Minecraft! &#9935;",
+      "Andrew wrote a book about how to take care of cats! &#128214;",
+      "Andrew loves pizza more than anything! &#127829;",
+      "Andrew's favorite color is blue! &#128153;",
+      "Andrew can ski and ice skate! &#9975;",
+      "Andrew is learning to play the piano! &#127929;",
+      "Andrew loves playing Cat Quest! &#128049;",
+      "Andrew's favorite movie is Spider-Man! &#128248;",
+      "Andrew loves math and science! &#128218;",
+      "Andrew enjoys swimming and biking outdoors! &#127946;",
+      "Andrew plays soccer and basketball with friends! &#9917;"
+    ],
+    zh: [
+      "Andrew是空手道绿带选手！&#129355;",
+      "Andrew最喜欢的游戏是Minecraft！&#9935;",
+      "Andrew写了一本关于如何照顾猫咪的书！&#128214;",
+      "Andrew最爱吃披萨！&#127829;",
+      "Andrew最喜欢的颜色是蓝色！&#128153;",
+      "Andrew会滑雪和溜冰！&#9975;",
+      "Andrew正在学弹钢琴！&#127929;",
+      "Andrew喜欢玩Cat Quest！&#128049;",
+      "Andrew最喜欢的电影是蜘蛛侠！&#128248;",
+      "Andrew热爱数学和科学！&#128218;",
+      "Andrew喜欢游泳和户外骑车！&#127946;",
+      "Andrew和朋友们一起踢足球和打篮球！&#9917;"
+    ]
+  };
+  var factIndex = 0;
+
+  function showNextFact() {
+    var lang = document.body.classList.contains('lang-zh') ? 'zh' : 'en';
+    var facts = funFacts[lang];
+    var el = document.getElementById('tickerText');
+    el.style.animation = 'none';
+    el.offsetHeight; // trigger reflow
+    el.innerHTML = facts[factIndex % facts.length];
+    el.style.animation = 'tickerSlideIn 0.5s ease-out';
+    factIndex++;
+  }
+
+  showNextFact();
+  setInterval(showNextFact, 4000);
+
+  // ===== Cat Paw Print Trails =====
+  var pawThrottle = 0;
+  document.addEventListener('mousemove', function(e) {
+    var now = Date.now();
+    if (now - pawThrottle < 150) return;
+    pawThrottle = now;
+
+    var paw = document.createElement('div');
+    paw.className = 'paw-print';
+    paw.innerHTML = '&#128062;';
+    paw.style.left = (e.clientX - 9) + 'px';
+    paw.style.top = (e.clientY - 9) + 'px';
+    paw.style.setProperty('--paw-rot', (Math.random() * 40 - 20) + 'deg');
+    document.body.appendChild(paw);
+
+    setTimeout(function() { paw.remove(); }, 1200);
+  });
+
+  // ===== Mini Piano (Web Audio API) =====
+  var audioCtx = null;
+  var noteFreqs = {
+    'C4': 261.63, 'C#4': 277.18, 'D4': 293.66, 'D#4': 311.13,
+    'E4': 329.63, 'F4': 349.23, 'F#4': 369.99, 'G4': 392.00,
+    'G#4': 415.30, 'A4': 440.00, 'A#4': 466.16, 'B4': 493.88,
+    'C5': 523.25
+  };
+
+  function getAudioCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+
+  function playNote(freq) {
+    var ctx = getAudioCtx();
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+
+    // Add a slight warmth with a second oscillator
+    var osc2 = ctx.createOscillator();
+    osc2.type = 'triangle';
+    osc2.frequency.value = freq;
+    var gain2 = ctx.createGain();
+    gain2.gain.value = 0.3;
+
+    gain.gain.setValueAtTime(0.5, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
+
+    gain2.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.0);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc2.connect(gain2);
+    gain2.connect(ctx.destination);
+
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 1.2);
+    osc2.start(ctx.currentTime);
+    osc2.stop(ctx.currentTime + 1.0);
+  }
+
+  // Mouse/touch events for piano
+  document.querySelectorAll('.piano-key').forEach(function(key) {
+    key.addEventListener('mousedown', function(e) {
+      e.preventDefault();
+      var note = this.getAttribute('data-note');
+      playNote(noteFreqs[note]);
+      this.classList.add('active');
+    });
+    key.addEventListener('mouseup', function() {
+      this.classList.remove('active');
+    });
+    key.addEventListener('mouseleave', function() {
+      this.classList.remove('active');
+    });
+    // Touch support
+    key.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+      var note = this.getAttribute('data-note');
+      playNote(noteFreqs[note]);
+      this.classList.add('active');
+    });
+    key.addEventListener('touchend', function() {
+      this.classList.remove('active');
+    });
+  });
+
+  // Keyboard support for piano
+  var keyMap = {};
+  document.querySelectorAll('.piano-key').forEach(function(key) {
+    var k = key.getAttribute('data-key');
+    if (k) keyMap[k] = key;
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.repeat) return;
+    var key = keyMap[e.key.toLowerCase()];
+    if (key) {
+      playNote(noteFreqs[key.getAttribute('data-note')]);
+      key.classList.add('active');
+    }
+  });
+  document.addEventListener('keyup', function(e) {
+    var key = keyMap[e.key.toLowerCase()];
+    if (key) key.classList.remove('active');
+  });
+
+  // ===== Scroll-reveal animation =====
   try {
     var reveals = document.querySelectorAll('.reveal');
     if ('IntersectionObserver' in window) {
