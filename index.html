@@ -128,23 +128,6 @@
       pointer-events: none; z-index: 0;
       overflow: hidden;
     }
-    .bg-shapes span {
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0.10;
-      animation: float 18s ease-in-out infinite;
-    }
-    .bg-shapes span:nth-child(1) { width: 300px; height: 300px; background: var(--blue);   top: -80px; left: -60px;  animation-delay: 0s; }
-    .bg-shapes span:nth-child(2) { width: 200px; height: 200px; background: var(--orange); top: 40%;  right: -50px; animation-delay: 3s; }
-    .bg-shapes span:nth-child(3) { width: 250px; height: 250px; background: var(--green);  bottom: 10%; left: 20%;  animation-delay: 6s; }
-    .bg-shapes span:nth-child(4) { width: 180px; height: 180px; background: var(--purple); top: 20%;  left: 55%;   animation-delay: 9s; }
-    .bg-shapes span:nth-child(5) { width: 220px; height: 220px; background: var(--pink);   bottom: -40px; right: 25%; animation-delay: 12s; }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      33%      { transform: translateY(-30px) rotate(5deg); }
-      66%      { transform: translateY(20px) rotate(-3deg); }
-    }
 
     /* ===== Navigation ===== */
     nav {
@@ -231,6 +214,7 @@
       animation: pop 0.6s ease-out;
       overflow: hidden;
       padding: 5px;
+      position: relative;
     }
     .hero-avatar img {
       width: 100%; height: 100%;
@@ -270,6 +254,33 @@
     }
     .hero-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(74,144,217,0.5); }
 
+    /* Status Bubble */
+    .status-bubble {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--glass);
+      backdrop-filter: blur(8px);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gray);
+      border: 1px solid var(--glass-border);
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .status-dot {
+      width: 8px; height: 8px;
+      background: #2ecc71;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #2ecc71;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.5; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
     /* ===== About ===== */
     .about-grid {
       display: grid; grid-template-columns: 1fr 1fr;
@@ -295,6 +306,63 @@
       .about-grid { grid-template-columns: 1fr; }
       .about-image { height: 220px; }
     }
+
+    /* ===== Minecraft Inventory ===== */
+    .inventory-container {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+    }
+    .inventory-grid {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 4px;
+      background: #8b8b8b;
+      padding: 4px;
+      border: 4px solid #373737;
+      border-right-color: #fff;
+      border-bottom-color: #fff;
+      max-width: 500px;
+      margin: 1.5rem auto;
+    }
+    .inventory-slot {
+      aspect-ratio: 1/1;
+      background: #8b8b8b;
+      border: 2px solid #373737;
+      border-top-color: #fff;
+      border-left-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      position: relative;
+    }
+    .inventory-slot:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .inventory-slot[data-tooltip]::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 10;
+    }
+    .inventory-slot:hover::after { opacity: 1; }
 
     /* ===== Fun Facts / Interests ===== */
     .cards {
@@ -544,24 +612,114 @@
       .piano-key.black { width: 26px; height: 90px; margin-left: -13px; margin-right: -13px; }
     }
 
-    /* ===== Goals ===== */
-    .goals-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
+    /* ===== Goals (Cat Quest Style) ===== */
+    .quest-log {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      position: relative;
+      z-index: 1;
     }
-    .goal {
-      background: #fff; border-radius: 16px;
-      padding: 1.8rem 1.5rem;
-      border-left: 5px solid var(--blue);
-      box-shadow: 0 3px 14px rgba(0,0,0,0.05);
+    .quest-card {
+      background: #fdf6e3; /* Parchment color */
+      border: 3px solid #5d4037;
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+      box-shadow: 8px 8px 0px rgba(0,0,0,0.1);
       transition: transform 0.2s;
     }
-    .goal:hover { transform: translateY(-4px); }
-    .goal:nth-child(2) { border-left-color: var(--green); }
-    .goal:nth-child(3) { border-left-color: var(--orange); }
-    .goal:nth-child(4) { border-left-color: var(--purple); }
-    .goal h3 { margin-bottom: 0.4rem; font-size: 1.1rem; }
-    .goal p  { font-size: 0.92rem; color: var(--gray); }
+    .quest-card:hover {
+      transform: scale(1.03) rotate(-1deg);
+    }
+    .quest-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      border-bottom: 2px dashed #d7ccc8;
+      padding-bottom: 0.5rem;
+    }
+    .quest-title {
+      font-family: 'Fredoka', sans-serif;
+      color: #5d4037;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .quest-reward {
+      background: #ffcc00;
+      color: #5d4037;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .quest-desc {
+      font-size: 0.9rem;
+      color: #795548;
+      line-height: 1.4;
+    }
+    .quest-status {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #2ecc71;
+    }
+    .quest-check {
+      width: 18px; height: 18px;
+      border: 2px solid #2ecc71;
+      border-radius: 4px;
+      display: flex;
+      align-items: center; justify-content: center;
+    }
+
+    /* Adventure Map Path (Removed old straight line) */
+    .adventure-map {
+      position: relative;
+      padding: 2rem 0;
+    }
+    .adventure-line { display: none; }
+
+    /* Level Bar */
+    .level-bar-container {
+      position: fixed;
+      top: 60px; left: 0;
+      width: 100%; height: 8px;
+      background: rgba(0,0,0,0.1);
+      z-index: 99;
+    }
+    .level-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ffcc00, #ff9900);
+      transition: width 0.1s;
+      position: relative;
+    }
+    .level-text {
+      position: absolute;
+      right: 10px; top: 10px;
+      background: #ffcc00;
+      color: #5d4037;
+      padding: 2px 10px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .adventure-cat {
+      position: fixed;
+      top: 50%; left: 50%;
+      font-size: 2rem;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      pointer-events: none;
+      transition: top 0.1s;
+      display: none;
+    }
 
     /* ===== Gallery ===== */
     .gallery-grid {
@@ -596,6 +754,35 @@
       box-shadow: 0 8px 32px rgba(0,0,0,0.05);
     }
     .giscus { margin-top: 1rem; }
+
+    /* Doodle Board */
+    .doodle-container {
+      background: #fff;
+      border: 2px dashed var(--blue);
+      border-radius: 12px;
+      margin-top: 2rem;
+      padding: 1rem;
+      text-align: center;
+    }
+    #doodle-canvas {
+      background: #fff;
+      cursor: crosshair;
+      border: 1px solid #eee;
+      max-width: 100%;
+    }
+    .doodle-controls {
+      margin-top: 0.5rem;
+      display: flex; gap: 0.5rem; justify-content: center;
+    }
+    .doodle-btn {
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      border: none;
+      background: var(--blue);
+      color: #fff;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
 
     /* ===== Visitors ===== */
     .visitors-container {
@@ -647,6 +834,50 @@
       border-radius: 6px;
     }
 
+    /* Virtual Pet */
+    .virtual-pet {
+      position: fixed;
+      bottom: 20px; right: 20px;
+      z-index: 1000;
+      cursor: pointer;
+      font-size: 3rem;
+      user-select: none;
+      transition: transform 0.2s;
+    }
+    .virtual-pet:hover { transform: scale(1.1); }
+    .pet-bubble {
+      position: absolute;
+      bottom: 100%; right: 0;
+      background: #fff;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    /* Celebrate Button */
+    .celebrate-btn {
+      position: fixed;
+      bottom: 20px; left: 20px;
+      z-index: 1000;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      color: #fff;
+      border: none;
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(253,121,168,0.4);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s;
+    }
+    .celebrate-btn:hover { transform: scale(1.1) rotate(15deg); }
+
     /* ===== Footer ===== */
     footer {
       position: relative; z-index: 1;
@@ -663,17 +894,254 @@
     .reveal.visible {
       opacity: 1; transform: translateY(0);
     }
+
+    /* ===== Loading Screen ===== */
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: linear-gradient(135deg, var(--bg), #e8eeff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .loading-logo {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      animation: loadingPulse 1.2s ease-in-out infinite;
+    }
+    .loading-text {
+      font-size: 1.1rem;
+      color: var(--gray);
+    }
+    .loading-dots span {
+      animation: loadingBlink 1s ease-in-out infinite;
+    }
+    .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes loadingBlink {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(74, 144, 217, 0.2);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      margin-top: 1.5rem;
+      animation: loadingSpin 0.8s linear infinite;
+    }
+    @keyframes loadingPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+    @keyframes loadingSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== Smooth Section Transitions ===== */
+    section {
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    section:not(.section-in-view) {
+      opacity: 0.85;
+      transform: translateY(8px);
+    }
+    section.section-in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== Hover Micro-animations ===== */
+    .hero-btn:hover,
+    .lang-btn:hover,
+    .yt-channel-link:hover {
+      animation: hoverBounce 0.5s ease;
+    }
+    .card:hover,
+    .fav-item:hover,
+    .yt-video-card:hover,
+    .quest-card:hover,
+    .book-showcase:hover {
+      animation: hoverGlow 0.4s ease forwards;
+    }
+    @keyframes hoverBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    @keyframes hoverGlow {
+      to {
+        box-shadow: 0 12px 40px rgba(74, 144, 217, 0.15);
+      }
+    }
+    .card:hover { transform: translateY(-6px) scale(1.02); }
+    .fav-item:hover { transform: translateX(8px); }
+    .yt-video-card:hover { transform: translateY(-6px); }
+    .quest-card:hover { transform: scale(1.03) rotate(-1deg); }
+    .book-showcase:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+    .inventory-slot:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease;
+    }
+
+    /* ===== Photo Carousel ===== */
+    .carousel-container {
+      position: relative;
+      max-width: 600px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .carousel-slide {
+      position: relative;
+      min-width: 100%;
+      aspect-ratio: 16/10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+      overflow: hidden;
+    }
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .carousel-slide .carousel-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      opacity: 0.9;
+      background: inherit;
+    }
+    .carousel-slide:nth-child(1) { background: linear-gradient(135deg, #a8e6cf, #dcedc1); }
+    .carousel-slide:nth-child(2) { background: linear-gradient(135deg, #ffd3b6, #ffaaa5); }
+    .carousel-slide:nth-child(3) { background: linear-gradient(135deg, #c3bef7, #a8d8ea); }
+    .carousel-slide:nth-child(4) { background: linear-gradient(135deg, #ffeaa7, #fab1a0); }
+    .carousel-slide:nth-child(5) { background: linear-gradient(135deg, #81ecec, #74b9ff); }
+    .carousel-slide:nth-child(6) { background: linear-gradient(135deg, #fd79a8, #e17055); }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      color: var(--dark);
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      transition: transform 0.2s, background 0.2s;
+      z-index: 10;
+    }
+    .carousel-btn:hover {
+      background: #fff;
+      transform: translateY(-50%) scale(1.1);
+    }
+    .carousel-btn.prev { left: 12px; }
+    .carousel-btn.next { right: 12px; }
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(74, 144, 217, 0.3);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .carousel-dot:hover { transform: scale(1.2); }
+    .carousel-dot.active {
+      background: var(--blue);
+      transform: scale(1.2);
+    }
+    .carousel-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.8rem 1rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.6));
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    /* ===== Lazy Loading ===== */
+    img[data-src] {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    img[data-src].loaded {
+      opacity: 1;
+    }
   </style>
 </head>
 <body class="lang-en">
 
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-logo">Andrew Wu</div>
+  <div class="loading-text">Loading Andrew's world<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span></div>
+  <div class="loading-spinner"></div>
+</div>
+
 <!-- Particle Background -->
 <canvas id="particle-canvas"></canvas>
+
+<!-- Level Bar -->
+<div class="level-bar-container">
+  <div class="level-bar-fill" id="level-bar">
+    <div class="level-text">LVL <span id="level-num">1</span></div>
+  </div>
+</div>
 
 <!-- Floating background shapes (kept as fallback) -->
 <div class="bg-shapes">
   <span></span><span></span><span></span><span></span><span></span>
 </div>
+
+<!-- Adventure Cat -->
+<div class="adventure-cat" id="adventure-cat">🐱</div>
+
+<!-- Virtual Pet -->
+<div class="virtual-pet" id="virtual-pet" onclick="petMeow()">
+  <div class="pet-bubble" id="pet-bubble">Meow!</div>
+  🐱
+</div>
+
+<!-- Celebrate Button -->
+<button class="celebrate-btn" onclick="celebrate()" title="Celebrate!">🎉</button>
 
 <!-- Navigation -->
 <nav>
@@ -709,7 +1177,16 @@
 
 <!-- Hero -->
 <section class="hero" id="home">
-  <div class="hero-avatar"><img src="profile.jpg" alt="Andrew Wu" /></div>
+  <div class="hero-avatar">
+    <img src="profile.jpg" alt="Andrew Wu" />
+  </div>
+  <div class="status-bubble">
+    <div class="status-dot"></div>
+    <span id="status-text">
+      <span class="en">Currently: Learning something new!</span>
+      <span class="zh">当前状态：正在学习新知识！</span>
+    </span>
+  </div>
   <h1>
     <span class="wave">&#128075;</span>
     <span id="typed-text"></span>
@@ -766,6 +1243,34 @@
           我甚至写了一本关于猫的书！
           我相信<span class="highlight hl-orange">每一天都是学习新知识的好机会</span>！
         </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Minecraft Inventory -->
+<section id="inventory">
+  <div class="reveal">
+    <h2 class="section-title">
+      <span class="en">My Inventory</span>
+      <span class="zh">我的装备栏</span>
+    </h2>
+    <p class="section-subtitle">
+      <span class="en">Check out the items I've collected on my journey!</span>
+      <span class="zh">看看我在旅途中收集到的宝物！</span>
+    </p>
+    <div class="underline" style="background: linear-gradient(90deg, #555, #333);"></div>
+    <div class="inventory-container">
+      <div class="inventory-grid">
+        <div class="inventory-slot" data-tooltip="Piano (+40 Harmony)">🎹</div>
+        <div class="inventory-slot" data-tooltip="Karate Belt (+50 Discipline)">🥋</div>
+        <div class="inventory-slot" data-tooltip="Cat Book (+30 Knowledge)">📖</div>
+        <div class="inventory-slot" data-tooltip="Soccer Ball (+25 Teamwork)">⚽</div>
+        <div class="inventory-slot" data-tooltip="Minecraft Pickaxe (+100 Creativity)">⛏️</div>
+        <div class="inventory-slot"></div>
+        <div class="inventory-slot"></div>
+        <div class="inventory-slot"></div>
+        <div class="inventory-slot"></div>
       </div>
     </div>
   </div>
@@ -851,10 +1356,10 @@
     <div class="underline" style="background: linear-gradient(90deg, var(--orange), var(--red));"></div>
     <div class="fav-list">
       <div class="fav-item">
-        <div class="fav-icon">&#127829;</div>
+        <div class="fav-icon">&#127843;</div>
         <div>
           <strong><span class="en">Favorite Food</span><span class="zh">最爱的食物</span></strong>
-          <span class="en">Pizza</span><span class="zh">披萨</span>
+          <span class="en">Sushi</span><span class="zh">寿司</span>
         </div>
       </div>
       <div class="fav-item">
@@ -868,21 +1373,21 @@
         <div class="fav-icon">&#127909;</div>
         <div>
           <strong><span class="en">Favorite Movie</span><span class="zh">最爱的电影</span></strong>
-          <span class="en">Spider-Man</span><span class="zh">蜘蛛侠</span>
+          <span class="en">Wild Robot</span><span class="zh">机器总动员</span>
         </div>
       </div>
       <div class="fav-item">
         <div class="fav-icon">&#128218;</div>
         <div>
           <strong><span class="en">Favorite Subject</span><span class="zh">最爱的科目</span></strong>
-          <span class="en">Math &amp; Science</span><span class="zh">数学和科学</span>
+          <span class="en">Reading &amp; Writing</span><span class="zh">阅读和写作</span>
         </div>
       </div>
       <div class="fav-item">
         <div class="fav-icon">&#127790;</div>
         <div>
           <strong><span class="en">Favorite Season</span><span class="zh">最爱的季节</span></strong>
-          <span class="en">Summer</span><span class="zh">夏天</span>
+          <span class="en">Spring</span><span class="zh">春天</span>
         </div>
       </div>
       <div class="fav-item">
@@ -987,7 +1492,7 @@
       <div class="yt-videos">
         <a href="https://www.youtube.com/shorts/EvTQ23efwbE" target="_blank" class="yt-video-card">
           <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/EvTQ23efwbE/0.jpg" alt="Piano Video 1" />
+            <img data-src="https://img.youtube.com/vi/EvTQ23efwbE/0.jpg" alt="Piano Video 1" class="lazy-img" />
             <div class="yt-play-btn">
               <svg viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.64 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="red"/><path d="M45 24L27 14v20" fill="white"/></svg>
             </div>
@@ -999,7 +1504,7 @@
         </a>
         <a href="https://www.youtube.com/shorts/DxOUtPkxDHE" target="_blank" class="yt-video-card">
           <div class="yt-thumb">
-            <img src="https://img.youtube.com/vi/DxOUtPkxDHE/0.jpg" alt="Piano Video 2" />
+            <img data-src="https://img.youtube.com/vi/DxOUtPkxDHE/0.jpg" alt="Piano Video 2" class="lazy-img" />
             <div class="yt-play-btn">
               <svg viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.64 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="red"/><path d="M45 24L27 14v20" fill="white"/></svg>
             </div>
@@ -1056,44 +1561,82 @@
 
 <!-- Goals -->
 <section id="goals">
-  <div class="reveal">
-    <h2 class="section-title">
-      <span class="en">My Goals</span>
-      <span class="zh">我的目标</span>
-    </h2>
-    <p class="section-subtitle">
-      <span class="en">Things I'm working towards and dreaming about!</span>
-      <span class="zh">我正在努力和梦想的事情！</span>
-    </p>
-    <div class="underline" style="background: linear-gradient(90deg, var(--purple), var(--pink));"></div>
-    <div class="goals-grid">
-      <div class="goal">
-        <h3>&#127891; <span class="en">Get Great Grades</span><span class="zh">取得好成绩</span></h3>
-        <p>
-          <span class="en">I want to do my best in all my subjects and make my family proud.</span>
-          <span class="zh">我想在所有科目上都做到最好，让家人为我骄傲。</span>
-        </p>
-      </div>
-      <div class="goal">
-        <h3>&#128187; <span class="en">Learn to Code</span><span class="zh">学习编程</span></h3>
-        <p>
-          <span class="en">I'm excited to learn more about programming and build cool projects.</span>
-          <span class="zh">我很期待学习更多编程知识，创造酷炫的项目。</span>
-        </p>
-      </div>
-      <div class="goal">
-        <h3>&#127758; <span class="en">Travel the World</span><span class="zh">环游世界</span></h3>
-        <p>
-          <span class="en">I dream of visiting amazing places and learning about different cultures.</span>
-          <span class="zh">我梦想着去世界各地的美丽地方，了解不同的文化。</span>
-        </p>
-      </div>
-      <div class="goal">
-        <h3>&#129351; <span class="en">Be a Good Friend</span><span class="zh">做一个好朋友</span></h3>
-        <p>
-          <span class="en">I always want to be kind, helpful, and a great teammate to everyone.</span>
-          <span class="zh">我希望永远善良、乐于助人，做一个好队友。</span>
-        </p>
+  <div class="adventure-map">
+    <div class="reveal">
+      <h2 class="section-title">
+        <span class="en">Active Quests</span>
+        <span class="zh">当前任务</span>
+      </h2>
+      <p class="section-subtitle">
+        <span class="en">The main quests I'm currently working on!</span>
+        <span class="zh">我目前正在努力完成的主线任务！</span>
+      </p>
+      <div class="underline" style="background: linear-gradient(90deg, #ffcc00, #ff9900);"></div>
+      
+      <div class="quest-log">
+        <!-- Quest 1 -->
+        <div class="quest-card">
+          <div class="quest-header">
+            <span class="quest-title"><span class="en">Honor Student</span><span class="zh">荣誉学生</span></span>
+            <span class="quest-reward">+500 XP</span>
+          </div>
+          <p class="quest-desc">
+            <span class="en">Do my best in all my subjects and make my family proud.</span>
+            <span class="zh">在所有科目上都做到最好，让家人为我骄傲。</span>
+          </p>
+          <div class="quest-status">
+            <div class="quest-check">✓</div>
+            <span class="en">In Progress</span><span class="zh">进行中</span>
+          </div>
+        </div>
+
+        <!-- Quest 2 -->
+        <div class="quest-card">
+          <div class="quest-header">
+            <span class="quest-title"><span class="en">Code Master</span><span class="zh">编程大师</span></span>
+            <span class="quest-reward">+800 XP</span>
+          </div>
+          <p class="quest-desc">
+            <span class="en">Learn more about programming and build cool projects.</span>
+            <span class="zh">学习更多编程知识，创造酷炫的项目。</span>
+          </p>
+          <div class="quest-status">
+            <div class="quest-check">✓</div>
+            <span class="en">In Progress</span><span class="zh">进行中</span>
+          </div>
+        </div>
+
+        <!-- Quest 3 -->
+        <div class="quest-card">
+          <div class="quest-header">
+            <span class="quest-title"><span class="en">World Explorer</span><span class="zh">世界探险家</span></span>
+            <span class="quest-reward">+1000 XP</span>
+          </div>
+          <p class="quest-desc">
+            <span class="en">Visit amazing places and learn about different cultures.</span>
+            <span class="zh">去世界各地的美丽地方，了解不同的文化。</span>
+          </p>
+          <div class="quest-status">
+            <div class="quest-check">✓</div>
+            <span class="en">In Progress</span><span class="zh">进行中</span>
+          </div>
+        </div>
+
+        <!-- Quest 4 -->
+        <div class="quest-card">
+          <div class="quest-header">
+            <span class="quest-title"><span class="en">Great Teammate</span><span class="zh">最佳队友</span></span>
+            <span class="quest-reward">+300 XP</span>
+          </div>
+          <p class="quest-desc">
+            <span class="en">Be kind, helpful, and a great teammate to everyone.</span>
+            <span class="zh">保持善良、乐于助人，做一个好队友。</span>
+          </p>
+          <div class="quest-status">
+            <div class="quest-check">✓</div>
+            <span class="en">In Progress</span><span class="zh">进行中</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1111,14 +1654,43 @@
       <span class="zh">用图片展示我最喜欢的事物！</span>
     </p>
     <div class="underline" style="background: linear-gradient(90deg, var(--green), var(--orange));"></div>
-    <div class="gallery-grid">
-      <div class="gallery-item">&#129355;</div>
-      <div class="gallery-item">&#9917;</div>
-      <div class="gallery-item">&#9975;</div>
-      <div class="gallery-item">&#127929;</div>
-      <div class="gallery-item">&#127918;</div>
-      <div class="gallery-item">&#128049;</div>
+    <div class="carousel-container">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide">
+          <img data-src="photos/karate.jpg" alt="Karate" onload="this.classList.add('loaded');this.nextElementSibling.style.display='none';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="carousel-placeholder">&#129355;</div>
+          <span class="carousel-caption"><span class="en">Karate</span><span class="zh">空手道</span></span>
+        </div>
+        <div class="carousel-slide">
+          <img data-src="photos/piano.jpg" alt="Piano" onload="this.classList.add('loaded');this.nextElementSibling.style.display='none';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="carousel-placeholder">&#127929;</div>
+          <span class="carousel-caption"><span class="en">Piano</span><span class="zh">钢琴</span></span>
+        </div>
+        <div class="carousel-slide">
+          <img data-src="photos/skiing.jpg" alt="Skiing" onload="this.classList.add('loaded');this.nextElementSibling.style.display='none';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="carousel-placeholder">&#9975;</div>
+          <span class="carousel-caption"><span class="en">Skiing</span><span class="zh">滑雪</span></span>
+        </div>
+        <div class="carousel-slide">
+          <img data-src="photos/soccer.jpg" alt="Soccer" onload="this.classList.add('loaded');this.nextElementSibling.style.display='none';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="carousel-placeholder">&#9917;</div>
+          <span class="carousel-caption"><span class="en">Soccer</span><span class="zh">足球</span></span>
+        </div>
+        <div class="carousel-slide">
+          <img data-src="photos/gaming.jpg" alt="Gaming" onload="this.classList.add('loaded');this.nextElementSibling.style.display='none';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="carousel-placeholder">&#127918;</div>
+          <span class="carousel-caption"><span class="en">Gaming</span><span class="zh">游戏</span></span>
+        </div>
+        <div class="carousel-slide">
+          <img data-src="photos/cats.jpg" alt="Cats" onload="this.classList.add('loaded');this.nextElementSibling.style.display='none';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="carousel-placeholder">&#128049;</div>
+          <span class="carousel-caption"><span class="en">Cats</span><span class="zh">猫咪</span></span>
+        </div>
+      </div>
+      <button class="carousel-btn prev" onclick="carouselPrev()" aria-label="Previous">&#10094;</button>
+      <button class="carousel-btn next" onclick="carouselNext()" aria-label="Next">&#10095;</button>
     </div>
+    <div class="carousel-dots" id="carouselDots"></div>
   </div>
 </section>
 
@@ -1154,6 +1726,19 @@
         crossorigin="anonymous"
         async>
       </script>
+      
+      <!-- Doodle Board -->
+      <div class="doodle-container">
+        <p style="font-weight: 700; margin-bottom: 0.5rem;">
+          <span class="en">Doodle Board</span>
+          <span class="zh">涂鸦板</span>
+        </p>
+        <canvas id="doodle-canvas" width="400" height="200"></canvas>
+        <div class="doodle-controls">
+          <button class="doodle-btn" onclick="clearDoodle()">Clear</button>
+          <button class="doodle-btn" onclick="downloadDoodle()">Save</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1202,6 +1787,7 @@
 <!-- Scripts -->
 <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
   // ===== Language toggle =====
   var currentLang = localStorage.getItem('lang') || 'en';
@@ -1226,6 +1812,7 @@
     }
     showNextFact();
     initTyped(); // Re-init typing animation for new language
+    updateStatus();
   }
 
   (function() {
@@ -1331,12 +1918,12 @@
       "Andrew is a Green Belt in Karate! &#129355;",
       "Andrew's favorite game is Minecraft! &#9935;",
       "Andrew wrote a book about how to take care of cats! &#128214;",
-      "Andrew loves pizza more than anything! &#127829;",
+      "Andrew loves sushi more than anything! &#127843;",
       "Andrew's favorite color is blue! &#128153;",
       "Andrew can ski and ice skate! &#9975;",
       "Andrew is learning to play the piano! &#127929;",
       "Andrew loves playing Cat Quest! &#128049;",
-      "Andrew's favorite movie is Spider-Man! &#128248;",
+      "Andrew's favorite movie is Wild Robot! &#128248;",
       "Andrew loves math and science! &#128218;",
       "Andrew enjoys swimming and biking outdoors! &#127946;",
       "Andrew plays soccer and basketball with friends! &#9917;"
@@ -1345,13 +1932,13 @@
       "Andrew是空手道绿带选手！&#129355;",
       "Andrew最喜欢的游戏是Minecraft！&#9935;",
       "Andrew写了一本关于如何照顾猫咪的书！&#128214;",
-      "Andrew最爱吃披萨！&#127829;",
+      "Andrew最爱吃寿司！&#127843;",
       "Andrew最喜欢的颜色是蓝色！&#128153;",
       "Andrew会滑雪和溜冰！&#9975;",
       "Andrew正在学弹钢琴！&#127929;",
       "Andrew喜欢玩Cat Quest！&#128049;",
-      "Andrew最喜欢的电影是蜘蛛侠！&#128248;",
-      "Andrew热爱数学和科学！&#128218;",
+      "Andrew最喜欢的电影是机器总动员！&#128248;",
+      "Andrew热爱阅读和写作！&#128218;",
       "Andrew喜欢游泳和户外骑车！&#127946;",
       "Andrew和朋友们一起踢足球和打篮球！&#9917;"
     ]
@@ -1362,6 +1949,7 @@
     var lang = document.body.classList.contains('lang-zh') ? 'zh' : 'en';
     var facts = funFacts[lang];
     var el = document.getElementById('tickerText');
+    if (!el) return;
     el.style.animation = 'none';
     el.offsetHeight; // trigger reflow
     el.innerHTML = facts[factIndex % facts.length];
@@ -1412,7 +2000,6 @@
     osc.type = 'sine';
     osc.frequency.value = freq;
 
-    // Add a slight warmth with a second oscillator
     var osc2 = ctx.createOscillator();
     osc2.type = 'triangle';
     osc2.frequency.value = freq;
@@ -1436,7 +2023,6 @@
     osc2.stop(ctx.currentTime + 1.0);
   }
 
-  // Mouse/touch events for piano
   document.querySelectorAll('.piano-key').forEach(function(key) {
     key.addEventListener('mousedown', function(e) {
       e.preventDefault();
@@ -1444,25 +2030,17 @@
       playNote(noteFreqs[note]);
       this.classList.add('active');
     });
-    key.addEventListener('mouseup', function() {
-      this.classList.remove('active');
-    });
-    key.addEventListener('mouseleave', function() {
-      this.classList.remove('active');
-    });
-    // Touch support
+    key.addEventListener('mouseup', function() { this.classList.remove('active'); });
+    key.addEventListener('mouseleave', function() { this.classList.remove('active'); });
     key.addEventListener('touchstart', function(e) {
       e.preventDefault();
       var note = this.getAttribute('data-note');
       playNote(noteFreqs[note]);
       this.classList.add('active');
     });
-    key.addEventListener('touchend', function() {
-      this.classList.remove('active');
-    });
+    key.addEventListener('touchend', function() { this.classList.remove('active'); });
   });
 
-  // Keyboard support for piano
   var keyMap = {};
   document.querySelectorAll('.piano-key').forEach(function(key) {
     var k = key.getAttribute('data-key');
@@ -1481,6 +2059,246 @@
     var key = keyMap[e.key.toLowerCase()];
     if (key) key.classList.remove('active');
   });
+
+  // ===== Status Bubble Logic =====
+  function updateStatus() {
+    var statuses = currentLang === 'en' 
+      ? ["Learning something new!", "Practicing Piano 🎹", "Training Karate 🥋", "Building in Minecraft ⛏️", "Reading about Cats 🐱"]
+      : ["正在学习新知识！", "正在练琴 🎹", "正在练空手道 🥋", "正在玩Minecraft ⛏️", "正在看关于猫的书 🐱"];
+    var hour = new Date().getHours();
+    var statusIdx = 0;
+    if (hour >= 8 && hour < 15) statusIdx = 0;
+    else if (hour >= 15 && hour < 17) statusIdx = 2;
+    else if (hour >= 17 && hour < 19) statusIdx = 1;
+    else if (hour >= 19 && hour < 21) statusIdx = 3;
+    else statusIdx = 4;
+    
+    document.getElementById('status-text').innerHTML = statuses[statusIdx];
+  }
+  updateStatus();
+
+  // ===== Virtual Pet Logic =====
+  function petMeow() {
+    var bubble = document.getElementById('pet-bubble');
+    var meows = ["Meow!", "Purrr...", "Mew?", "Hungry!", "Play with me!"];
+    bubble.innerText = meows[Math.floor(Math.random() * meows.length)];
+    bubble.style.opacity = 1;
+    setTimeout(function() { bubble.style.opacity = 0; }, 2000);
+  }
+
+  // ===== Celebrate (Confetti) =====
+  function celebrate() {
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#4a90d9', '#9b59b6', '#27ae60', '#f5a623', '#fd79a8']
+    });
+  }
+
+  // ===== Konami Code Easter Egg =====
+  var konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+  var konamiIndex = 0;
+  document.addEventListener('keydown', function(e) {
+    if (e.keyCode === konamiCode[konamiIndex]) {
+      konamiIndex++;
+      if (konamiIndex === konamiCode.length) {
+        konamiIndex = 0;
+        confetti({
+          particleCount: 300,
+          spread: 100,
+          origin: { y: 0.5 },
+          colors: ['#4a90d9', '#9b59b6', '#27ae60', '#f5a623', '#fd79a8', '#e74c3c']
+        });
+        setTimeout(function() {
+          confetti({
+            particleCount: 100,
+            spread: 60,
+            origin: { y: 0.7 }
+          });
+        }, 200);
+      }
+    } else {
+      konamiIndex = 0;
+    }
+  });
+
+  // ===== Loading Screen =====
+  (function() {
+    var loader = document.getElementById('loadingScreen');
+    function hideLoader() {
+      if (loader) {
+        loader.classList.add('hidden');
+        setTimeout(function() { loader.remove(); }, 700);
+      }
+    }
+    if (document.readyState === 'complete') {
+      setTimeout(hideLoader, 1200);
+    } else {
+      window.addEventListener('load', function() {
+        setTimeout(hideLoader, 1200);
+      });
+    }
+    setTimeout(hideLoader, 2500);
+  })();
+
+  // ===== Photo Carousel =====
+  var carouselIndex = 0;
+  var carouselSlides = document.querySelectorAll('.carousel-slide');
+  var carouselTotal = carouselSlides.length;
+
+  function updateCarousel() {
+    var track = document.getElementById('carouselTrack');
+    if (track) track.style.transform = 'translateX(-' + carouselIndex * 100 + '%)';
+    document.querySelectorAll('.carousel-dot').forEach(function(dot, i) {
+      dot.classList.toggle('active', i === carouselIndex);
+    });
+  }
+
+  function carouselPrev() {
+    carouselIndex = (carouselIndex - 1 + carouselTotal) % carouselTotal;
+    updateCarousel();
+  }
+
+  function carouselNext() {
+    carouselIndex = (carouselIndex + 1) % carouselTotal;
+    updateCarousel();
+  }
+
+  (function initCarouselDots() {
+    var dotsContainer = document.getElementById('carouselDots');
+    if (!dotsContainer || !carouselTotal) return;
+    for (var i = 0; i < carouselTotal; i++) {
+      (function(idx) {
+        var dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (idx === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Slide ' + (idx + 1));
+        dot.onclick = function() {
+          carouselIndex = idx;
+          updateCarousel();
+        };
+        dotsContainer.appendChild(dot);
+      })(i);
+    }
+  })();
+
+  // Lazy load carousel images when gallery is visible
+  var gallerySection = document.getElementById('gallery');
+  if (gallerySection && 'IntersectionObserver' in window) {
+    var galleryObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('img[data-src]').forEach(function(img) {
+            var src = img.getAttribute('data-src');
+            if (src) {
+              img.src = src;
+              img.removeAttribute('data-src');
+            }
+          });
+          galleryObs.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '100px' });
+    galleryObs.observe(gallerySection);
+  }
+
+  // ===== Lazy Loading for Images =====
+  (function initLazyLoad() {
+    var lazyImages = document.querySelectorAll('img[data-src]');
+    if (!('IntersectionObserver' in window)) {
+      lazyImages.forEach(function(img) {
+        var src = img.getAttribute('data-src');
+        if (src) { img.src = src; img.classList.add('loaded'); }
+      });
+      return;
+    }
+    var imgObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var img = entry.target;
+          var src = img.getAttribute('data-src');
+          if (src) {
+            img.src = src;
+            img.removeAttribute('data-src');
+            img.onload = function() { img.classList.add('loaded'); };
+          }
+          imgObserver.unobserve(img);
+        }
+      });
+    }, { rootMargin: '150px', threshold: 0.01 });
+    lazyImages.forEach(function(img) { imgObserver.observe(img); });
+  })();
+
+  // ===== Smooth Section Transitions =====
+  (function initSectionTransitions() {
+    var sections = document.querySelectorAll('section');
+    if (!('IntersectionObserver' in window)) return;
+    var sectionObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('section-in-view');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '-50px 0px' });
+    sections.forEach(function(s) { sectionObserver.observe(s); });
+  })();
+
+  // ===== Adventure Map Path =====
+  window.addEventListener('scroll', function() {
+    var cat = document.getElementById('adventure-cat');
+    var goalsSection = document.getElementById('goals');
+    var rect = goalsSection.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      cat.style.display = 'block';
+      var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+      cat.style.top = (rect.top + progress * rect.height) + 'px';
+    } else {
+      cat.style.display = 'none';
+    }
+  });
+
+  // ===== Doodle Board =====
+  var doodleCanvas = document.getElementById('doodle-canvas');
+  var dctx = doodleCanvas.getContext('2d');
+  var drawing = false;
+
+  dctx.lineWidth = 3;
+  dctx.lineCap = 'round';
+  dctx.strokeStyle = '#4a90d9';
+
+  function getPos(e) {
+    var rect = doodleCanvas.getBoundingClientRect();
+    var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return { x: clientX - rect.left, y: clientY - rect.top };
+  }
+
+  function startDraw(e) { drawing = true; draw(e); }
+  function stopDraw() { drawing = false; dctx.beginPath(); }
+  function draw(e) {
+    if (!drawing) return;
+    e.preventDefault();
+    var pos = getPos(e);
+    dctx.lineTo(pos.x, pos.y);
+    dctx.stroke();
+    dctx.beginPath();
+    dctx.moveTo(pos.x, pos.y);
+  }
+
+  doodleCanvas.addEventListener('mousedown', startDraw);
+  doodleCanvas.addEventListener('mousemove', draw);
+  window.addEventListener('mouseup', stopDraw);
+  doodleCanvas.addEventListener('touchstart', startDraw);
+  doodleCanvas.addEventListener('touchmove', draw);
+  window.addEventListener('touchend', stopDraw);
+
+  function clearDoodle() { dctx.clearRect(0, 0, doodleCanvas.width, doodleCanvas.height); }
+  function downloadDoodle() {
+    var link = document.createElement('a');
+    link.download = 'andrew-doodle.png';
+    link.href = doodleCanvas.toDataURL();
+    link.click();
+  }
 
   // ===== Scroll-reveal animation =====
   try {
